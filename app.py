@@ -6,4 +6,4 @@ st.sidebar.title("Parámetros")
 # Añadir imagenes
 st.image("Python_logo.png", width=300)
 # Añadir imagenes EN BARRA
-st.sidebar.image("DMC.png", width=200)
+st.sidebar.image("DMC.png", width=100)
