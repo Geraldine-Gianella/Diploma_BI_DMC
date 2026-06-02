@@ -7,3 +7,5 @@ st.sidebar.title("Parámetros")
 st.image("Python_logo.png", width=300)
 # Añadir imagenes EN BARRA
 st.sidebar.image("DMC.png", width=100)
+
+st.write("Elaborado por: Geraldine Geronimo")
