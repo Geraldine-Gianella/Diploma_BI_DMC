@@ -9,3 +9,5 @@ st.image("Python_logo.png", width=300)
 st.sidebar.image("DMC.png", width=100)
 
 st.write("Elaborado por: Geraldine Geronimo")
+
+archivo = st.file_uploader("Cargue el archivo excel o csv")
