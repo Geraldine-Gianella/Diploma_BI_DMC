@@ -1,4 +1,6 @@
 import streamlit as st
+import pandas as pd
+
 # Añadir titulo
 st.title("Proyecto Final Diploma BI")
 # Añadir barra
