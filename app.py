@@ -15,19 +15,20 @@ st.write("Elaborado por: Geraldine Geronimo")
 # Crear módulos de vista
 modulos = st.sidebar.selectbox("Seleccione un módulo", ["Home", "Carga y perfil del dataset", "Procesamiento de datos", "Análisis visual"])
 
+if modulos == "Home" :
+  st.write("Bienvenido a la aplicación")
 
-
-
-# Crear un cargador de archivos
-archivo = st.file_uploader("Cargue el archivo excel o csv")
-
-if archivo is not None :
+elif modulos == "Carga y perfil del dataset":
+  # Crear un cargador de archivos
+  archivo = st.file_uploader("Cargue el archivo excel o csv")
   
-  if archivo.name.endswith(".csv"):
-    data = pd.read_csv(archivo)
-    st.write(data)
-  elif archivo.name.endswith(".xlsx"):
-    data = pd.read_excel(archivo)
+  if archivo is not None :
+    
+    if archivo.name.endswith(".csv"):
+      data = pd.read_csv(archivo)
+      st.write(data)
+    elif archivo.name.endswith(".xlsx"):
+      data = pd.read_excel(archivo)
     st.write(data)
   else:
     st.write("Formato no válido")
