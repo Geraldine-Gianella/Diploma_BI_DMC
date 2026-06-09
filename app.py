@@ -12,7 +12,11 @@ st.sidebar.image("DMC.png", width=100)
 
 st.write("Elaborado por: Geraldine Geronimo")
 
-modulos = st.selectbox("eleccione un módulo", ["Home", "Carga y perfil del dataset", "Procesamiento de datos", "Análisis visual"])
+# Crear módulos de vista
+modulos = st.sidebar.selectbox("Seleccione un módulo", ["Home", "Carga y perfil del dataset", "Procesamiento de datos", "Análisis visual"])
+
+
+
 
 # Crear un cargador de archivos
 archivo = st.file_uploader("Cargue el archivo excel o csv")
