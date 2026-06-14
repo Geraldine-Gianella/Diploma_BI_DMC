@@ -82,8 +82,11 @@ elif modulos == "Carga y perfil del dataset":
     # Guardamos el nombre del archivo en session_state
     st.session_state.nombre_archivo = archivo.name
     
-    if archivo.name.endswith(".csv") or archivo.name.endswith(".xlsx"):
-      st.session_state.data = pd.read_csv(archivo)
+    if archivo.name.endswith(".csv"):
+    st.session_state.data = pd.read_csv(archivo)
+
+    elif archivo.name.endswith(".xlsx"):
+        st.session_state.data = pd.read_excel(archivo)
       
       # Estandarizar el nombre las columnas, todas a minúsculas
       st.session_state.data.columns = st.session_state.data.columns.str.lower()
