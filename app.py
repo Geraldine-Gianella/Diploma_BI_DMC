@@ -226,6 +226,25 @@ elif modulos == "Procesamiento de datos":
             st.write("- ", columna)
 
         # Valroes faltantes por columna y porcentaje de nulos
+        # Valores faltantes por columna
+        nulos = data.isnull().sum()
+        
+        # Porcentaje de nulos
+        porcentaje_nulos = (
+            data.isnull().sum() / len(data)
+        ) * 100
+        
+        # Tabla resumen
+        resumen_nulos = pd.DataFrame({
+            "Variable": data.columns,
+            "Valores nulos": nulos.values,
+            "Porcentaje (%)": porcentaje_nulos.values.round(2)
+        })
+        
+        st.subheader("Valores Faltantes por Columna")
+        st.dataframe(resumen_nulos)
+
+
         # Valores faltantes por columna y porcentaje de nulos
         # Detectar duplicados y reportar su cantidad.
         # Outliers en variables numéricas usando IQR o boxplots.
