@@ -70,6 +70,9 @@ elif modulos == "Carga y perfil del dataset":
       
       # Estandarizar el nombre las columnas, todas a minúsculas
       data.columns = data.columns.str.lower()
+
+      # Cambiar el espacio en blanco de las columnas por un subguion 
+      data.columns = data.columns.str.lower().str.replace(" ", "_")
       
       # Vista previa del archivo 
       st.subheader("Vista previa del dataset")
