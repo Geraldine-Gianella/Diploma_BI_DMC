@@ -72,6 +72,15 @@ elif modulos == "Carga y perfil del dataset":
       st.subheader("Vista previa del dataset")
       st.dataframe(data.head())
 
+      # Columnas y tipos de datos
+      st.subheader("Columnas y Tipos de Datos")
+      info_columnas = pd.DataFrame({
+          "Columna": data.columns,
+          "Tipo de dato": data.dtypes.astype(str)
+      })
+      info_columnas = info_columnas.reset_index(drop=True)
+      st.dataframe(info_columnas)
+
       # Tipos de variables
       columnas_numericas = data.select_dtypes(
           include="number"
@@ -101,15 +110,6 @@ elif modulos == "Carga y perfil del dataset":
           st.write("Se identificaron variables de fecha en el dataset.")
       else:
           st.write("No se identificaron variables de fecha en el dataset.")
-
-      # Columnas y tipos de datos
-      st.subheader("Columnas y Tipos de Datos")
-      info_columnas = pd.DataFrame({
-          "Columna": data.columns,
-          "Tipo de dato": data.dtypes.astype(str)
-      })
-      info_columnas = info_columnas.reset_index(drop=True)
-      st.dataframe(info_columnas)
 
       # Información general
       st.subheader("Información general")  
