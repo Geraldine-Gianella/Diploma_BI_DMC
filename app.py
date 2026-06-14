@@ -114,8 +114,20 @@ elif modulos == "Carga y perfil del dataset":
 
       # Mostrar mensaje si no hay variables de tipo numérica o categórica
       st.subheader("Validación de Variables")
-      if len(columnas_numericas) == 0:
-        st.write("El dataset no contiene variables numéricas.")
+      if len(columnas_numericas) > 0:
+          st.write("Se identificaron variables numéricas en el dataset.")
+      else:
+          st.write("No se identificaron variables numéricas en el dataset.")
+      
+      if len(columnas_categoricas) > 0:
+          st.write("Se identificaron variables categóricas en el dataset.")
+      else:
+          st.write("No se identificaron variables categóricas en el dataset.")
+      
+      if len(columnas_fecha) > 0:
+          st.write("Se identificaron variables de fecha en el dataset.")
+      else:
+          st.write("No se identificaron variables de fecha en el dataset.")
 
 
       # Selección de variables 
