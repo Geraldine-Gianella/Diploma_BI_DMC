@@ -100,6 +100,16 @@ elif modulos == "Carga y perfil del dataset":
       st.write("Variables categóricas:", len(columnas_categoricas))
       st.write("Valores nulos:", total_nulos)
       st.write("Filas duplicadas:", duplicados)
+
+      # Selección de variables 
+      st.header("Selección de Variables")
+      columnas_seleccionadas = st.multiselect(
+          "Seleccione una o más columnas",
+          options=data.columns)
+      
+      if columnas_seleccionadas:
+          st.dataframe(data[columnas_seleccionadas].head())
+
   else:
     st.write("Formato no válido")
   
