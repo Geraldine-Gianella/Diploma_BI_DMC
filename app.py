@@ -72,6 +72,15 @@ elif modulos == "Carga y perfil del dataset":
       st.subheader("Vista previa del dataset")
       st.dataframe(data.head())
 
+      # Columnas y tipos de datos
+      st.subheader("Columnas y Tipos de Datos")
+      info_columnas = pd.DataFrame({
+          "Columna": data.columns,
+          "Tipo de dato": data.dtypes.astype(str)
+      })
+
+      st.dataframe(info_columnas)
+
       # Información general
       st.subheader("Información general")  
       
