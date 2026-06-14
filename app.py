@@ -200,6 +200,35 @@ elif modulos == "Procesamiento de datos":
                 st.write("-", columna)
         else:
             st.write("No se identificaron variables de fecha.")
+
+        # Variables numéricas y categóricas
+        # Función para identificar variables numéricas
+        def obtener_variables_numericas(data):
+            return data.select_dtypes(
+                include="number"
+            ).columns.tolist()
+            
+        # Función para identificar variables categóricas
+        def obtener_variables_categoricas(data):
+            return data.select_dtypes(
+                include=["object", "category"]
+            ).columns.tolist()
+
+        columnas_numericas = obtener_variables_numericas(data)
+        columnas_categoricas = obtener_variables_categoricas(data)
+
+        st.subheader("Variables Numéricas")
+        st.write(columnas_numericas)
+        st.subheader("Variables Categóricas")   
+        st.write(columnas_categoricas)
+
+        # Valroes faltantes por columna y porcentaje de nulos
+        # Valores faltantes por columna y porcentaje de nulos
+        # Detectar duplicados y reportar su cantidad.
+        # Outliers en variables numéricas usando IQR o boxplots.
+        # Permitir filtros dinámicos por categorías, rangos numéricos o fechas cuando apliquen
+        # Evitar que la app se detenga por errores; usar validaciones y mensajes con st.warning(), st.info() o st.error().
+
             
           
 else :
