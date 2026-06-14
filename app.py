@@ -65,12 +65,41 @@ elif modulos == "Carga y perfil del dataset":
   
   if archivo is not None :
     
-    if archivo.name.endswith(".csv"):
+    if archivo.name.endswith(".csv") or archivo.name.endswith(".xlsx"):
       data = pd.read_csv(archivo)
-      st.write(data)
-    elif archivo.name.endswith(".xlsx"):
-      data = pd.read_excel(archivo)
-    st.write(data)
+      
+      # Vista previa del archivo 
+      st.header("Vista previa del dataset")
+      st.dataframe(data.head())
+    
+      # Dimensiones 
+      nfilas, ncolumnas = data.shape
+      st.header("Dimensiones del DataFrame")  
+      st.write("Número de filas:", nfilas)
+      st.write("Número de columnas:", ncolumnas)
+    
+      # Tipos de variables
+      columnas_numericas = data.select_dtypes(
+          include="number"
+      ).columns.tolist()
+      
+      columnas_categoricas = data.select_dtypes(
+          include=["object", "category"]
+      ).columns.tolist()
+      
+      columnas_fecha = data.select_dtypes(
+          include=["datetime64[ns]"]
+      ).columns.tolist()
+        
+      # Métricas
+      total_nulos = data.isnull().sum().sum()
+      duplicados = data.duplicated().sum()
+      
+      st.header("Métricas Generales")
+      st.write("Variables numéricas:", len(columnas_numericas))
+      st.write("Variables categóricas:", len(columnas_categoricas))
+      st.write("Valores nulos:", total_nulos)
+      st.write("Filas duplicadas:", duplicados)
   else:
     st.write("Formato no válido")
 
@@ -102,9 +131,6 @@ elif modulos == "Carga y perfil del dataset":
   duplicados = data.duplicated().sum()
   
   st.header("Métricas Generales")
-  
-  st.write("Número de filas:", nfilas)
-  st.write("Número de columnas:", ncolumnas)
   st.write("Variables numéricas:", len(columnas_numericas))
   st.write("Variables categóricas:", len(columnas_categoricas))
   st.write("Valores nulos:", total_nulos)
