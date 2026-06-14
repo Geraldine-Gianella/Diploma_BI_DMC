@@ -71,6 +71,19 @@ elif modulos == "Carga y perfil del dataset":
       # Vista previa del archivo 
       st.subheader("Vista previa del dataset")
       st.dataframe(data.head())
+
+      # Tipos de variables
+      columnas_numericas = data.select_dtypes(
+          include="number"
+      ).columns.tolist()
+      
+      columnas_categoricas = data.select_dtypes(
+          include=["object", "category"]
+      ).columns.tolist()
+      
+      columnas_fecha = data.select_dtypes(
+          include=["datetime64[ns]"]
+      ).columns.tolist()
       
       # Mostrar mensaje si no hay variables de tipo numérica o categórica
       st.subheader("Validación de Variables")
@@ -103,19 +116,6 @@ elif modulos == "Carga y perfil del dataset":
       
       # Dimensiones 
       nfilas, ncolumnas = data.shape 
-  
-      # Tipos de variables
-      columnas_numericas = data.select_dtypes(
-          include="number"
-      ).columns.tolist()
-      
-      columnas_categoricas = data.select_dtypes(
-          include=["object", "category"]
-      ).columns.tolist()
-      
-      columnas_fecha = data.select_dtypes(
-          include=["datetime64[ns]"]
-      ).columns.tolist()
 
       # Métricas
       total_nulos = data.isnull().sum().sum()
