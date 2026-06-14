@@ -163,7 +163,7 @@ elif modulos == "Carga y perfil del dataset":
         st.write("Resumen estadístico")
         st.dataframe(st.session_state.data[columnas_seleccionadas].describe(include="all"))
 
-  elif modulos == "Procesamiento de datos":
+elif modulos == "Procesamiento de datos":
 
     # Estandarizar data: el nombre de las columanas de la data a minusculas (Se realió en Modulo2)
     st.session_state.data.columns = st.session_state.data.columns.str.lower()
