@@ -169,7 +169,7 @@ elif modulos == "Carga y perfil del dataset":
         st.write("Resumen estadístico")
         st.dataframe(data[columnas_seleccionadas].describe(include="all"))
     
-else:
+ else:
     st.write("Por favor cargue su archivo")
 
 elif modulos == "Procesamiento de datos":
