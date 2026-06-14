@@ -94,86 +94,86 @@ elif modulos == "Carga y perfil del dataset":
         st.success("Dataset cargado: " + st.session_state.nombre_archivo)   
         data = st.session_state.data
       
-    # Estandarizar el nombre las columnas, todas a minúsculas
-    data.columns = data.columns.str.lower()
-
-    # Cambiar el espacio en blanco de las columnas por un subguion 
-    st.session_state.data.columns = st.session_state.data.columns.str.lower().str.replace(" ", "_")
-      
-    # Vista previa del archivo 
-    st.subheader("Vista previa del dataset")
-    st.dataframe(data.head())
-
-    # Columnas y tipos de datos
-    st.subheader("Columnas y Tipos de Datos")
-    info_columnas = pd.DataFrame({
-          "Columna": data.columns,
-          "Tipo de dato": data.dtypes.astype(str)
-    })
-    info_columnas = info_columnas.reset_index(drop=True)
-    st.dataframe(info_columnas)
-
-    # Tipos de variables
-    columnas_numericas = data.select_dtypes(
-         include="number"
-    ).columns.tolist()
-      
-    columnas_categoricas = data.select_dtypes(
-       include=["object", "category"]
-    ).columns.tolist()
-      
-    columnas_fecha = data.select_dtypes(
-       include=["datetime64[ns]"]
-    ).columns.tolist()
-      
-    # Mostrar mensaje si no hay variables de tipo numérica o categórica
-    st.write("**Validación de Variables:**")
-    if len(columnas_numericas) > 0:
-       st.write("- Se identificaron variables numéricas en el dataset.")
-    else:
-       st.write("- No se identificaron variables numéricas en el dataset.")
-      
-    if len(columnas_categoricas) > 0:
-      st.write("- Se identificaron variables categóricas en el dataset.")
-    else:
-         st.write("- No se identificaron variables categóricas en el dataset.")
-      
-    if len(columnas_fecha) > 0:
-      st.write("- Se identificaron variables de fecha en el dataset.")
-    else:
-      st.write("- No se identificaron variables de fecha en el dataset.")
-
-    # Información general
-    st.subheader("Información general")  
-      
-    # Dimensiones 
-    nfilas, ncolumnas = data.shape 
-
-    # Métricas
-    total_nulos = data.isnull().sum().sum()
-    duplicados = data.duplicated().sum()
-
-    # Mostrar dimensiones, tipos de variables y métricas en una tabla
-    st.write("- Número de registros:", nfilas)
-    st.write("- Número de variables:", ncolumnas)
-    st.write("- Variables numéricas identificadas:", len(columnas_numericas))
-    st.write("- Variables categóricas identificadas:", len(columnas_categoricas))
-    st.write("- Total de valores nulos:", total_nulos)
-    st.write("- Total de filas duplicadas:", duplicados)
-
-    # Selección de variables 
-    st.subheader("Selección de Variables")
-    columnas_seleccionadas = st.multiselect(
-        "Seleccione una o más columnas",
-       options=data.columns)
-
-     # Mostrar estadísticas desccriptivas de las variables seleccionadas
-    if columnas_seleccionadas:
-        st.write("Resumen estadístico")
-        st.dataframe(data[columnas_seleccionadas].describe(include="all"))
-
-    else:
-            st.write("Por favor cargue su archivo")
+        # Estandarizar el nombre las columnas, todas a minúsculas
+        data.columns = data.columns.str.lower()
+    
+        # Cambiar el espacio en blanco de las columnas por un subguion 
+        st.session_state.data.columns = st.session_state.data.columns.str.lower().str.replace(" ", "_")
+          
+        # Vista previa del archivo 
+        st.subheader("Vista previa del dataset")
+        st.dataframe(data.head())
+    
+        # Columnas y tipos de datos
+        st.subheader("Columnas y Tipos de Datos")
+        info_columnas = pd.DataFrame({
+              "Columna": data.columns,
+              "Tipo de dato": data.dtypes.astype(str)
+        })
+        info_columnas = info_columnas.reset_index(drop=True)
+        st.dataframe(info_columnas)
+    
+        # Tipos de variables
+        columnas_numericas = data.select_dtypes(
+             include="number"
+        ).columns.tolist()
+          
+        columnas_categoricas = data.select_dtypes(
+           include=["object", "category"]
+        ).columns.tolist()
+          
+        columnas_fecha = data.select_dtypes(
+           include=["datetime64[ns]"]
+        ).columns.tolist()
+          
+        # Mostrar mensaje si no hay variables de tipo numérica o categórica
+        st.write("**Validación de Variables:**")
+        if len(columnas_numericas) > 0:
+           st.write("- Se identificaron variables numéricas en el dataset.")
+        else:
+           st.write("- No se identificaron variables numéricas en el dataset.")
+          
+        if len(columnas_categoricas) > 0:
+          st.write("- Se identificaron variables categóricas en el dataset.")
+        else:
+             st.write("- No se identificaron variables categóricas en el dataset.")
+          
+        if len(columnas_fecha) > 0:
+          st.write("- Se identificaron variables de fecha en el dataset.")
+        else:
+          st.write("- No se identificaron variables de fecha en el dataset.")
+    
+        # Información general
+        st.subheader("Información general")  
+          
+        # Dimensiones 
+        nfilas, ncolumnas = data.shape 
+    
+        # Métricas
+        total_nulos = data.isnull().sum().sum()
+        duplicados = data.duplicated().sum()
+    
+        # Mostrar dimensiones, tipos de variables y métricas en una tabla
+        st.write("- Número de registros:", nfilas)
+        st.write("- Número de variables:", ncolumnas)
+        st.write("- Variables numéricas identificadas:", len(columnas_numericas))
+        st.write("- Variables categóricas identificadas:", len(columnas_categoricas))
+        st.write("- Total de valores nulos:", total_nulos)
+        st.write("- Total de filas duplicadas:", duplicados)
+    
+        # Selección de variables 
+        st.subheader("Selección de Variables")
+        columnas_seleccionadas = st.multiselect(
+            "Seleccione una o más columnas",
+           options=data.columns)
+    
+         # Mostrar estadísticas desccriptivas de las variables seleccionadas
+        if columnas_seleccionadas:
+            st.write("Resumen estadístico")
+            st.dataframe(data[columnas_seleccionadas].describe(include="all"))
+    
+        else:
+                st.write("Por favor cargue su archivo")
 
 elif modulos == "Procesamiento de datos":
 
