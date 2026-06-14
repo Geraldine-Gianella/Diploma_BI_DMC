@@ -195,7 +195,7 @@ elif modulos == "Procesamiento de datos":
         # Mencionar si hay variables tipo fecha y mostrarlas
         st.subheader("Variables de tipo Fecha")
         if len(columnas_fecha) > 0:
-            st.write("Se identificaron las siguientes variables de fecha:")
+            st.write("Se identificaron las siguientes variables de tipo fecha:")
             for columna in columnas_fecha:
                 st.write("-", columna)
         else:
