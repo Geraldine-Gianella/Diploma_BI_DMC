@@ -97,6 +97,18 @@ elif modulos == "Carga y perfil del dataset":
       include=["datetime64[ns]"]
   ).columns.tolist()
     
+  # Métricas
+  total_nulos = data.isnull().sum().sum()
+  duplicados = data.duplicated().sum()
+  
+  st.header("Métricas Generales")
+  
+  st.write("Número de filas:", nfilas)
+  st.write("Número de columnas:", ncolumnas)
+  st.write("Variables numéricas:", len(columnas_numericas))
+  st.write("Variables categóricas:", len(columnas_categoricas))
+  st.write("Valores nulos:", total_nulos)
+  st.write("Filas duplicadas:", duplicados)
   
   
   
