@@ -129,7 +129,6 @@ elif modulos == "Carga y perfil del dataset":
       st.write("• Total de valores nulos:", total_nulos)
       st.write("• Total de filas duplicadas:", duplicados)
 
-
       # Selección de variables 
       st.subheader("Selección de Variables")
       columnas_seleccionadas = st.multiselect(
@@ -140,23 +139,6 @@ elif modulos == "Carga y perfil del dataset":
       if columnas_seleccionadas:
         st.write("Resumen estadístico")
         st.dataframe(data[columnas_seleccionadas].describe(include="all"))
-
-      # Mensajes sobre tipos de variables
-      st.subheader("Resumen de Variables Detectadas") 
-      if len(columnas_numericas) > 0:
-          st.write("Se encontraron", len(columnas_numericas), "variables numéricas.")
-      else:
-          st.write("El dataset no contiene variables numéricas.")
-      
-      if len(columnas_categoricas) > 0:
-          st.write("Se encontraron", len(columnas_categoricas), "variables categóricas.")
-      else:
-          st.write("El dataset no contiene variables categóricas.")
-      
-      if len(columnas_fecha) > 0:
-          st.write("Se encontraron", len(columnas_fecha), "variables de fecha.")
-      else:
-          st.write("El dataset no contiene variables de fecha.")
 
   else:
     st.write("Formato no válido")
