@@ -87,36 +87,42 @@ elif modulos == "Carga y perfil del dataset":
 
     elif archivo.name.endswith(".xlsx"):
         st.session_state.data = pd.read_excel(archivo)
+
+    # Mostrar información si ya existe una data cargada
+    if st.session_state.data is not None:
+    
+        st.success("Dataset cargado: " + st.session_state.nombre_archivo)   
+        data = st.session_state.data
       
     # Estandarizar el nombre las columnas, todas a minúsculas
-    st.session_state.data.columns = st.session_state.data.columns.str.lower()
+    data.columns = data.columns.str.lower()
 
     # Cambiar el espacio en blanco de las columnas por un subguion 
     st.session_state.data.columns = st.session_state.data.columns.str.lower().str.replace(" ", "_")
       
     # Vista previa del archivo 
     st.subheader("Vista previa del dataset")
-    st.dataframe(st.session_state.data.head())
+    st.dataframe(data.head())
 
     # Columnas y tipos de datos
     st.subheader("Columnas y Tipos de Datos")
     info_columnas = pd.DataFrame({
-          "Columna": st.session_state.data.columns,
-          "Tipo de dato": st.session_state.data.dtypes.astype(str)
+          "Columna": data.columns,
+          "Tipo de dato": data.dtypes.astype(str)
     })
     info_columnas = info_columnas.reset_index(drop=True)
     st.dataframe(info_columnas)
 
     # Tipos de variables
-    columnas_numericas = st.session_state.data.select_dtypes(
+    columnas_numericas = data.select_dtypes(
          include="number"
     ).columns.tolist()
       
-    columnas_categoricas = st.session_state.data.select_dtypes(
+    columnas_categoricas = data.select_dtypes(
        include=["object", "category"]
     ).columns.tolist()
       
-    columnas_fecha = st.session_state.data.select_dtypes(
+    columnas_fecha = data.select_dtypes(
        include=["datetime64[ns]"]
     ).columns.tolist()
       
@@ -141,11 +147,11 @@ elif modulos == "Carga y perfil del dataset":
     st.subheader("Información general")  
       
     # Dimensiones 
-    nfilas, ncolumnas = st.session_state.data.shape 
+    nfilas, ncolumnas = data.shape 
 
     # Métricas
-    total_nulos = st.session_state.data.isnull().sum().sum()
-    duplicados = st.session_state.data.duplicated().sum()
+    total_nulos = data.isnull().sum().sum()
+    duplicados = data.duplicated().sum()
 
     # Mostrar dimensiones, tipos de variables y métricas en una tabla
     st.write("- Número de registros:", nfilas)
@@ -159,12 +165,12 @@ elif modulos == "Carga y perfil del dataset":
     st.subheader("Selección de Variables")
     columnas_seleccionadas = st.multiselect(
         "Seleccione una o más columnas",
-       options=st.session_state.data.columns)
+       options=data.columns)
 
      # Mostrar estadísticas desccriptivas de las variables seleccionadas
     if columnas_seleccionadas:
         st.write("Resumen estadístico")
-        st.dataframe(st.session_state.data[columnas_seleccionadas].describe(include="all"))
+        st.dataframe(data[columnas_seleccionadas].describe(include="all"))
 
     else:
             st.write("Por favor cargue su archivo")
@@ -172,17 +178,17 @@ elif modulos == "Carga y perfil del dataset":
 elif modulos == "Procesamiento de datos":
 
     # Estandarizar data: el nombre de las columanas de la data a minusculas (Se realió en Modulo2)
-    st.session_state.data.columns = st.session_state.data.columns.str.lower()
+    data.columns = data.columns.str.lower()
 
     # Estandarizar data: cambiar el espacio en blanco de las columnas por un subguion (Se realizó en Modulo2)
-    st.session_state.data.columns = st.session_state.data.columns.str.lower().str.replace(" ", "_")
+    data.columns = data.columns.str.lower().str.replace(" ", "_")
 
     # Convertir las columnas a fecha si lo son 
-    for columna in st.session_state.data.columns:
+    for columna in data.columns:
       if "date" in columna:
-          st.session_state.data[columna] = pd.to_datetime(st.session_state.data[columna])
+          data[columna] = pd.to_datetime(data[columna])
 
-    columnas_fecha = st.session_state.data.select_dtypes(
+    columnas_fecha = data.select_dtypes(
           include=["datetime64[ns]"]
       ).columns.tolist()
 
