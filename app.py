@@ -225,28 +225,31 @@ elif modulos == "Procesamiento de datos":
         for columna in columnas_categoricas:
             st.write("- ", columna)
 
-        # Valroes faltantes por columna y porcentaje de nulos
         # Valores faltantes por columna
         nulos = data.isnull().sum()
         
         # Porcentaje de nulos
-        porcentaje_nulos = (
-            data.isnull().sum() / len(data)
-        ) * 100
+        porcentaje_nulos = (data.isnull().sum() / len(data)) * 100
         
-        # Tabla resumen
+        # Mostramos los valores faltantes y los porcentajes nulos en una tabla
         resumen_nulos = pd.DataFrame({
             "Variable": data.columns,
             "Valores nulos": nulos.values,
             "Porcentaje (%)": porcentaje_nulos.values.round(2)
         })
-        
+
         st.subheader("Valores Faltantes por Columna")
         st.dataframe(resumen_nulos)
 
-
-        # Valores faltantes por columna y porcentaje de nulos
         # Detectar duplicados y reportar su cantidad.
+        st.subheader("Detección de Duplicados")
+        
+        if duplicados > 0:
+            st.write("Se identificaron", duplicados, "filas duplicadas en el dataset.")
+        else:
+            st.write("No se identificaron filas duplicadas en el dataset.")
+
+
         # Outliers en variables numéricas usando IQR o boxplots.
         # Permitir filtros dinámicos por categorías, rangos numéricos o fechas cuando apliquen
         # Evitar que la app se detenga por errores; usar validaciones y mensajes con st.warning(), st.info() o st.error().
