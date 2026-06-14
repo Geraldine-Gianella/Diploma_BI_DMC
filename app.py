@@ -83,7 +83,7 @@ elif modulos == "Carga y perfil del dataset":
     st.session_state.nombre_archivo = archivo.name
     
     if archivo.name.endswith(".csv"):
-    st.session_state.data = pd.read_csv(archivo)
+        st.session_state.data = pd.read_csv(archivo)
 
     elif archivo.name.endswith(".xlsx"):
         st.session_state.data = pd.read_excel(archivo)
