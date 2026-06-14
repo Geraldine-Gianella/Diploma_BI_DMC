@@ -163,6 +163,9 @@ elif modulos == "Carga y perfil del dataset":
         st.write("Resumen estadístico")
         st.dataframe(st.session_state.data[columnas_seleccionadas].describe(include="all"))
 
+    else:
+            st.write("Por favor cargue su archivo")
+
 elif modulos == "Procesamiento de datos":
 
     # Estandarizar data: el nombre de las columanas de la data a minusculas (Se realió en Modulo2)
@@ -185,8 +188,6 @@ elif modulos == "Procesamiento de datos":
     else:
         st.write("- No se identificaron variables de fecha en el dataset.")
 
-  else:
-        st.write("Por favor cargue su archivo")
   
 else :
   st.write("Formato no válido")
