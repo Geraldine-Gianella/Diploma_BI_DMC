@@ -88,8 +88,8 @@ elif modulos == "Carga y perfil del dataset":
     elif archivo.name.endswith(".xlsx"):
         st.session_state.data = pd.read_excel(archivo)
 
-    # Mostrar información si ya existe una data cargada
-    if st.session_state.data is not None:   
+   # Mostrar información si ya existe una data cargada
+  if st.session_state.data is not None:   
         data = st.session_state.data
         st.success("Dataset cargado: " + st.session_state.nombre_archivo)
       
