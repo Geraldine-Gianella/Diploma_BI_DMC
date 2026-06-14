@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 
 # CONFIGURACIÓN DE SESSION STATE
 # Guardamos el dataset cargado
@@ -250,8 +251,15 @@ elif modulos == "Procesamiento de datos":
         else:
             st.write("No se identificaron filas duplicadas en el dataset.")
 
-
         # Outliers en variables numéricas usando IQR o boxplots.
+      
+        st.subheader("Detección de Outliers en Variables Numéricas")
+        if len(columnas_numericas) > 0:
+            fig1 = px.box( data[columnas_numericas], title="Boxplots de Variables Numéricas")
+            st.plotly_chart(fig1)     
+        else:
+            st.write( "No se identificaron variables numéricas en el dataset.")
+
         # Permitir filtros dinámicos por categorías, rangos numéricos o fechas cuando apliquen
         # Evitar que la app se detenga por errores; usar validaciones y mensajes con st.warning(), st.info() o st.error().
 
