@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 
+# TÍTULOS E IDENTIFICACIÓN
 # Añadir titulo
 st.title("APLICACIÓN ANALIZADORA DE DATASETS CON STREAMLIT")
 # Añadir barra
@@ -14,7 +15,9 @@ st.write("Elaborado por: Geraldine Gianella Geronimo Oscanoa")
 st.write("**Año:** 2026")
 st.markdown("---")
 
-st.subheader("🎯 Objetivo y Alcance")
+# DETALLES DEL PROYECTO
+
+st.subheader("Objetivo y Alcance")
 st.write(
     "El objetivo de este proyecto es proveer una herramienta interactiva para "
     "la carga, exploración y análisis visual de datos. El alcance incluye el "
@@ -40,6 +43,13 @@ st.write("- **Gráficos e Interactividad:** Plotly, Matplotlib y Seaborn")
 st.write("- **Control de Versiones:** GitHub")
 
 st.markdown("---")
+
+# NOTA DE USO RESPONSABLE
+
+st.warning(
+    "⚠️ **Nota de uso responsable:** Los resultados presentados en esta app son "
+    "estrictamente exploratorios y no reemplazan una validación técnica o profesional."
+)
 
 # Crear módulos de vista
 modulos = st.sidebar.selectbox("Seleccione un módulo", ["Home", "Carga y perfil del dataset", "Procesamiento de datos", "Análisis visual"])
