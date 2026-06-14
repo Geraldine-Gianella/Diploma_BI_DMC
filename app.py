@@ -148,8 +148,25 @@ elif modulos == "Carga y perfil del dataset":
 
   elif modulos == "Procesamiento de datos":
 
-    # Estandariaar el nombre de las columanas de la data 
+    # Estandarizar data: el nombre de las columanas de la data a minusculas (Se realió en Modulo2)
     data.columns = data.columns.str.lower()
+
+    # Estandarizar data: cambiar el espacio en blanco de las columnas por un subguion (Se realizó en Modulo2)
+    data.columns = data.columns.str.lower().str.replace(" ", "_")
+
+    # Convertir las columnas a fecha si lo son 
+    for columna in data.columns:
+      if "date" in columna:
+          data[columna] = pd.to_datetime(data[columna])
+
+    columnas_fecha = data.select_dtypes(
+          include=["datetime64[ns]"]
+      ).columns.tolist()
+
+      if len(columnas_fecha) > 0:
+          st.write("- Se identificaron variables de fecha en el dataset.")
+      else:
+          st.write("- No se identificaron variables de fecha en el dataset.")
 
   else:
     st.write("Por favor cargue su archivo")
