@@ -138,8 +138,6 @@ elif modulos == "Carga y perfil del dataset":
 
       # Mostrar estadísticas desccriptivas de las variables seleccionadas
       if columnas_seleccionadas:
-        st.write("Vista previa")
-        st.dataframe(data[columnas_seleccionadas].head())
         st.write("Resumen estadístico")
         st.dataframe(data[columnas_seleccionadas].describe(include="all"))
 
