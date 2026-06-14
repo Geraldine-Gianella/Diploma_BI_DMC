@@ -163,10 +163,10 @@ elif modulos == "Carga y perfil del dataset":
           include=["datetime64[ns]"]
       ).columns.tolist()
 
-      if len(columnas_fecha) > 0:
-          st.write("- Se identificaron variables de fecha en el dataset.")
-      else:
-          st.write("- No se identificaron variables de fecha en el dataset.")
+    if len(columnas_fecha) > 0:
+        st.write("- Se identificaron variables de fecha en el dataset.")
+    else:
+        st.write("- No se identificaron variables de fecha en el dataset.")
 
   else:
     st.write("Por favor cargue su archivo")
