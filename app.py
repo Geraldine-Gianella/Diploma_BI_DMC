@@ -141,7 +141,7 @@ elif modulos == "Carga y perfil del dataset":
         st.dataframe(data[columnas_seleccionadas].describe(include="all"))
 
   else:
-    st.write("Formato no válido")
+    st.write("Por favor cargue su archivo")
   
 else :
-  st.write("Por favor cargue su archivo")
+  st.write("Formato no válido")
