@@ -69,7 +69,7 @@ elif modulos == "Carga y perfil del dataset":
       data = pd.read_csv(archivo)
       
       # Vista previa del archivo 
-      st.write("**Vista previa del dataset:**")
+      st.subheader("Vista previa del dataset")
       st.dataframe(data.head())
 
       # Columnas y tipos de datos
@@ -95,7 +95,7 @@ elif modulos == "Carga y perfil del dataset":
       ).columns.tolist()
       
       # Mostrar mensaje si no hay variables de tipo numérica o categórica
-      st.subheader("Validación de Variables")
+      st.write("**Validación de Variables:**")
       if len(columnas_numericas) > 0:
           st.write("Se identificaron variables numéricas en el dataset.")
       else:
