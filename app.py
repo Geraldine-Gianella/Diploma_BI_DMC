@@ -242,6 +242,7 @@ elif modulos == "Procesamiento de datos":
         st.dataframe(resumen_nulos)
 
         # Detectar duplicados y reportar su cantidad.
+        duplicados = data.duplicated().sum()
         st.subheader("Detección de Duplicados")
         
         if duplicados > 0:
