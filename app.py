@@ -78,7 +78,7 @@ elif modulos == "Carga y perfil del dataset":
           "Columna": data.columns,
           "Tipo de dato": data.dtypes.astype(str)
       })
-
+      info_columnas = info_columnas.reset_index(drop=True)
       st.dataframe(info_columnas)
 
       # Información general
