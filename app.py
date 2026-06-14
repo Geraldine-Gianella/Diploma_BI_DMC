@@ -191,12 +191,16 @@ elif modulos == "Procesamiento de datos":
         columnas_fecha = data.select_dtypes(
               include=["datetime64[ns]"]
           ).columns.tolist()
-    
-        if len(columnas_fecha) > 0:
-            st.write("- Se identificaron variables de fecha en el dataset.")
-        else:
-            st.write("- No se identificaron variables de fecha en el dataset.")
 
-  
+        # Mencionar si hay variables tipo fecha y mostrarlas
+        st.subheader("Variables de tipo Fecha")
+        if len(columnas_fecha) > 0:
+            st.write("Se identificaron las siguientes variables de fecha:")
+            for columna in columnas_fecha:
+                st.write("-", columna)
+        else:
+            st.write("No se identificaron variables de fecha.")
+            
+          
 else :
   st.write("Formato no válido")
