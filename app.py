@@ -304,6 +304,22 @@ elif modulos == "Procesamiento de datos":
                     (data[variable_num] <= rango[1])
                 ]
 
+                # Filtros por fechas 
+                if len(columnas_fecha) > 0:
+                
+                    variable_fecha = st.selectbox(
+                        "Variable fecha",
+                        columnas_fecha
+                    )
+                
+                    fecha_min = data[variable_fecha].min()
+                    fecha_max = data[variable_fecha].max()
+                
+                    fechas = st.date_input(
+                        "Seleccione rango de fechas",
+                        value=(fecha_min, fecha_max)
+                    )
+
         # Evitar que la app se detenga por errores; usar validaciones y mensajes con st.warning(), st.info() o st.error().
 
             
