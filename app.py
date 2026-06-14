@@ -69,7 +69,7 @@ elif modulos == "Carga y perfil del dataset":
       data = pd.read_csv(archivo)
       
       # Vista previa del archivo 
-      st.subheader("Vista previa del dataset")
+      st.write("**Vista previa del dataset:**")
       st.dataframe(data.head())
 
       # Columnas y tipos de datos
@@ -122,12 +122,12 @@ elif modulos == "Carga y perfil del dataset":
       duplicados = data.duplicated().sum()
 
       # Mostrar dimensiones, tipos de variables y métricas en una tabla
-      st.write("• Número de registros:", nfilas)
-      st.write("• Número de variables:", ncolumnas)
-      st.write("• Variables numéricas identificadas:", len(columnas_numericas))
-      st.write("• Variables categóricas identificadas:", len(columnas_categoricas))
-      st.write("• Total de valores nulos:", total_nulos)
-      st.write("• Total de filas duplicadas:", duplicados)
+      st.write("- Número de registros:", nfilas)
+      st.write("- Número de variables:", ncolumnas)
+      st.write("- Variables numéricas identificadas:", len(columnas_numericas))
+      st.write("- Variables categóricas identificadas:", len(columnas_categoricas))
+      st.write("- Total de valores nulos:", total_nulos)
+      st.write("- Total de filas duplicadas:", duplicados)
 
       # Selección de variables 
       st.subheader("Selección de Variables")
