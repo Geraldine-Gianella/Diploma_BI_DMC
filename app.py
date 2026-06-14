@@ -69,15 +69,15 @@ elif modulos == "Carga y perfil del dataset":
       data = pd.read_csv(archivo)
       
       # Vista previa del archivo 
-      st.header("Vista previa del dataset")
+      st.subheader("Vista previa del dataset")
       st.dataframe(data.head())
-    
+
+      # Información general
+      st.subheader("Información general")  
+      
       # Dimensiones 
-      nfilas, ncolumnas = data.shape
-      st.header("Dimensiones del DataFrame")  
-      st.write("Número de filas:", nfilas)
-      st.write("Número de columnas:", ncolumnas)
-    
+      nfilas, ncolumnas = data.shape 
+  
       # Tipos de variables
       columnas_numericas = data.select_dtypes(
           include="number"
@@ -90,19 +90,37 @@ elif modulos == "Carga y perfil del dataset":
       columnas_fecha = data.select_dtypes(
           include=["datetime64[ns]"]
       ).columns.tolist()
-        
+
       # Métricas
       total_nulos = data.isnull().sum().sum()
       duplicados = data.duplicated().sum()
+
+      # Mostrar dimensiones, tipos de variables y métricas en una tabla
+      resumen = pd.DataFrame({
+          "Indicador": [
+              "Número de filas",
+              "Número de columnas",
+              "Variables numéricas",
+              "Variables categóricas",
+              "Valores nulos",
+              "Filas duplicadas"
+          ],
+          "Valor": [
+              nfilas,
+              ncolumnas,
+              len(columnas_numericas),
+              len(columnas_categoricas),
+              total_nulos,
+              duplicados
+          ]
+      })
       
-      st.header("Métricas Generales")
-      st.write("Variables numéricas:", len(columnas_numericas))
-      st.write("Variables categóricas:", len(columnas_categoricas))
-      st.write("Valores nulos:", total_nulos)
-      st.write("Filas duplicadas:", duplicados)
+      st.dataframe(resumen)
+        
+
 
       # Selección de variables 
-      st.header("Selección de Variables")
+      st.subheader("Selección de Variables")
       columnas_seleccionadas = st.multiselect(
           "Seleccione una o más columnas",
           options=data.columns)
@@ -111,7 +129,7 @@ elif modulos == "Carga y perfil del dataset":
           st.dataframe(data[columnas_seleccionadas].head())
 
       # Mensajes sobre tipos de variables
-      st.header("Resumen de Variables Detectadas") 
+      st.subheader("Resumen de Variables Detectadas") 
       if len(columnas_numericas) > 0:
           st.write("Se encontraron", len(columnas_numericas), "variables numéricas.")
       else:
