@@ -125,7 +125,11 @@ elif modulos == "Carga y perfil del dataset":
       })
       
       st.dataframe(resumen)
-        
+
+      # Mostrar mensaje si no hay variables de tipo numérica o categórica
+      st.subheader("Validación de Variables")
+      if len(columnas_numericas) == 0:
+        st.write("El dataset no contiene variables numéricas.")
 
 
       # Selección de variables 
@@ -133,9 +137,13 @@ elif modulos == "Carga y perfil del dataset":
       columnas_seleccionadas = st.multiselect(
           "Seleccione una o más columnas",
           options=data.columns)
-      
+
+      # Mostrar estadísticas desccriptivas de las variables seleccionadas
       if columnas_seleccionadas:
-          st.dataframe(data[columnas_seleccionadas].head())
+        st.write("Vista previa")
+        st.dataframe(data[columnas_seleccionadas].head())
+        st.write("Resumen estadístico")
+        st.dataframe(data[columnas_seleccionadas].describe(include="all"))
 
       # Mensajes sobre tipos de variables
       st.subheader("Resumen de Variables Detectadas") 
