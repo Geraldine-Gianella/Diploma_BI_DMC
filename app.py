@@ -218,9 +218,12 @@ elif modulos == "Procesamiento de datos":
         columnas_categoricas = obtener_variables_categoricas(data)
 
         st.subheader("Variables Numéricas")
-        st.write(columnas_numericas)
-        st.subheader("Variables Categóricas")   
-        st.write(columnas_categoricas)
+        for columna in columnas_numericas:
+            st.write("- ", columna)
+        st.subheader("Variables Categóricas")
+        
+        for columna in columnas_categoricas:
+            st.write("- ", columna)
 
         # Valroes faltantes por columna y porcentaje de nulos
         # Valores faltantes por columna y porcentaje de nulos
