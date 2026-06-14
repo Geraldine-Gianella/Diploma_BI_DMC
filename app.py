@@ -105,26 +105,12 @@ elif modulos == "Carga y perfil del dataset":
       duplicados = data.duplicated().sum()
 
       # Mostrar dimensiones, tipos de variables y métricas en una tabla
-      resumen = pd.DataFrame({
-          "Indicador": [
-              "Número de filas",
-              "Número de columnas",
-              "Variables numéricas",
-              "Variables categóricas",
-              "Valores nulos",
-              "Filas duplicadas"
-          ],
-          "Valor": [
-              nfilas,
-              ncolumnas,
-              len(columnas_numericas),
-              len(columnas_categoricas),
-              total_nulos,
-              duplicados
-          ]
-      })
-      
-      st.dataframe(resumen)
+      st.write("• Número de registros:", nfilas)
+      st.write("• Número de variables:", ncolumnas)
+      st.write("• Variables numéricas identificadas:", len(columnas_numericas))
+      st.write("• Variables categóricas identificadas:", len(columnas_categoricas))
+      st.write("• Total de valores nulos:", total_nulos)
+      st.write("• Total de filas duplicadas:", duplicados)
 
       # Mostrar mensaje si no hay variables de tipo numérica o categórica
       st.subheader("Validación de Variables")
