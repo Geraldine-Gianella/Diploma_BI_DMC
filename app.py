@@ -185,8 +185,8 @@ elif modulos == "Procesamiento de datos":
     else:
         st.write("- No se identificaron variables de fecha en el dataset.")
 
-else:
-    st.write("Por favor cargue su archivo")
+  else:
+        st.write("Por favor cargue su archivo")
   
 else :
   st.write("Formato no válido")
