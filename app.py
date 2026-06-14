@@ -67,6 +67,7 @@ elif modulos == "Carga y perfil del dataset":
     
     if archivo.name.endswith(".csv") or archivo.name.endswith(".xlsx"):
       data = pd.read_csv(archivo)
+      
       # Estandarizar el nombre las columnas, todas a minúsculas
       data.columns = data.columns.str.lower()
       
@@ -145,6 +146,7 @@ elif modulos == "Carga y perfil del dataset":
   elif modulos == "Procesamiento de datos":
 
     # Estandariaar el nombre de las columanas de la data 
+    data.columns = data.columns.str.lower()
 
   else:
     st.write("Por favor cargue su archivo")
