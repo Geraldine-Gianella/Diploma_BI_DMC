@@ -261,6 +261,49 @@ elif modulos == "Procesamiento de datos":
             st.write( "No se identificaron variables numéricas en el dataset.")
 
         # Permitir filtros dinámicos por categorías, rangos numéricos o fechas cuando apliquen
+        st.subheader("Filtros Dinámicos")
+
+        # Filtro categórico
+        if len(columnas_categoricas) > 0:
+        
+            variable_cat = st.selectbox(
+                "Variable categórica",
+                columnas_categoricas
+            )
+        
+            categorias = st.multiselect(
+                "Seleccione categorías",
+                data[variable_cat].dropna().unique()
+            )
+        
+            if categorias:
+                data = data[
+                    data[variable_cat].isin(categorias)
+                ]
+
+            # Filtro numérico 
+            if len(columnas_numericas) > 0:
+            
+                variable_num = st.selectbox(
+                    "Variable numérica",
+                    columnas_numericas
+                )
+            
+                minimo = float(data[variable_num].min())
+                maximo = float(data[variable_num].max())
+            
+                rango = st.slider(
+                    "Seleccione rango",
+                    minimo,
+                    maximo,
+                    (minimo, maximo)
+                )
+            
+                data = data[
+                    (data[variable_num] >= rango[0]) &
+                    (data[variable_num] <= rango[1])
+                ]
+
         # Evitar que la app se detenga por errores; usar validaciones y mensajes con st.warning(), st.info() o st.error().
 
             
