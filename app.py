@@ -88,6 +88,9 @@ elif modulos == "Carga y perfil del dataset":
     elif archivo.name.endswith(".xlsx"):
         st.session_state.data = pd.read_excel(archivo)
 
+  else:
+    st.write("Por favor cargue su archivo")
+
   # Mostrar información si ya existe una data cargada
   if st.session_state.data is not None:   
     data = st.session_state.data
@@ -169,8 +172,6 @@ elif modulos == "Carga y perfil del dataset":
         st.write("Resumen estadístico")
         st.dataframe(data[columnas_seleccionadas].describe(include="all"))
     
- else:
-    st.write("Por favor cargue su archivo")
 
 elif modulos == "Procesamiento de datos":
 
