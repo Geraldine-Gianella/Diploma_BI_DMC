@@ -89,10 +89,9 @@ elif modulos == "Carga y perfil del dataset":
         st.session_state.data = pd.read_excel(archivo)
 
     # Mostrar información si ya existe una data cargada
-    if st.session_state.data is not None:
-    
-        st.success("Dataset cargado: " + st.session_state.nombre_archivo)   
+    if st.session_state.data is not None:   
         data = st.session_state.data
+        st.success("Dataset cargado: " + st.session_state.nombre_archivo)
       
         # Estandarizar el nombre las columnas, todas a minúsculas
         data.columns = data.columns.str.lower()
