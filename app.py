@@ -21,7 +21,7 @@ st.markdown("---")
 modulos = st.sidebar.selectbox("Seleccione un módulo", ["Home", "Carga y perfil del dataset", "Procesamiento de datos", "Análisis visual"])
 
 if modulos == "Home" :
-  st.write("Bienvenido a la aplicación")
+  st.subheader("BIENVENIDO A LA APLICACIÓN")
     # DETALLES DEL PROYECTO
     
   st.subheader("Objetivo y Alcance")
