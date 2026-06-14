@@ -110,6 +110,23 @@ elif modulos == "Carga y perfil del dataset":
       if columnas_seleccionadas:
           st.dataframe(data[columnas_seleccionadas].head())
 
+      # Mensajes sobre tipos de variables
+      st.header("Resumen de Variables Detectadas") 
+      if len(columnas_numericas) > 0:
+          st.write("Se encontraron", len(columnas_numericas), "variables numéricas.")
+      else:
+          st.write("El dataset no contiene variables numéricas.")
+      
+      if len(columnas_categoricas) > 0:
+          st.write("Se encontraron", len(columnas_categoricas), "variables categóricas.")
+      else:
+          st.write("El dataset no contiene variables categóricas.")
+      
+      if len(columnas_fecha) > 0:
+          st.write("Se encontraron", len(columnas_fecha), "variables de fecha.")
+      else:
+          st.write("El dataset no contiene variables de fecha.")
+
   else:
     st.write("Formato no válido")
   
