@@ -71,6 +71,23 @@ elif modulos == "Carga y perfil del dataset":
       # Vista previa del archivo 
       st.subheader("Vista previa del dataset")
       st.dataframe(data.head())
+      
+      # Mostrar mensaje si no hay variables de tipo numérica o categórica
+      st.subheader("Validación de Variables")
+      if len(columnas_numericas) > 0:
+          st.write("Se identificaron variables numéricas en el dataset.")
+      else:
+          st.write("No se identificaron variables numéricas en el dataset.")
+      
+      if len(columnas_categoricas) > 0:
+          st.write("Se identificaron variables categóricas en el dataset.")
+      else:
+          st.write("No se identificaron variables categóricas en el dataset.")
+      
+      if len(columnas_fecha) > 0:
+          st.write("Se identificaron variables de fecha en el dataset.")
+      else:
+          st.write("No se identificaron variables de fecha en el dataset.")
 
       # Columnas y tipos de datos
       st.subheader("Columnas y Tipos de Datos")
@@ -111,23 +128,6 @@ elif modulos == "Carga y perfil del dataset":
       st.write("• Variables categóricas identificadas:", len(columnas_categoricas))
       st.write("• Total de valores nulos:", total_nulos)
       st.write("• Total de filas duplicadas:", duplicados)
-
-      # Mostrar mensaje si no hay variables de tipo numérica o categórica
-      st.subheader("Validación de Variables")
-      if len(columnas_numericas) > 0:
-          st.write("Se identificaron variables numéricas en el dataset.")
-      else:
-          st.write("No se identificaron variables numéricas en el dataset.")
-      
-      if len(columnas_categoricas) > 0:
-          st.write("Se identificaron variables categóricas en el dataset.")
-      else:
-          st.write("No se identificaron variables categóricas en el dataset.")
-      
-      if len(columnas_fecha) > 0:
-          st.write("Se identificaron variables de fecha en el dataset.")
-      else:
-          st.write("No se identificaron variables de fecha en el dataset.")
 
 
       # Selección de variables 
