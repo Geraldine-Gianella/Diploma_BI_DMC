@@ -88,81 +88,81 @@ elif modulos == "Carga y perfil del dataset":
     elif archivo.name.endswith(".xlsx"):
         st.session_state.data = pd.read_excel(archivo)
       
-      # Estandarizar el nombre las columnas, todas a minúsculas
-      st.session_state.data.columns = st.session_state.data.columns.str.lower()
+    # Estandarizar el nombre las columnas, todas a minúsculas
+    st.session_state.data.columns = st.session_state.data.columns.str.lower()
 
-      # Cambiar el espacio en blanco de las columnas por un subguion 
-      st.session_state.data.columns = st.session_state.data.columns.str.lower().str.replace(" ", "_")
+    # Cambiar el espacio en blanco de las columnas por un subguion 
+    st.session_state.data.columns = st.session_state.data.columns.str.lower().str.replace(" ", "_")
       
-      # Vista previa del archivo 
-      st.subheader("Vista previa del dataset")
-      st.dataframe(st.session_state.data.head())
+    # Vista previa del archivo 
+    st.subheader("Vista previa del dataset")
+    st.dataframe(st.session_state.data.head())
 
-      # Columnas y tipos de datos
-      st.subheader("Columnas y Tipos de Datos")
-      info_columnas = pd.DataFrame({
+    # Columnas y tipos de datos
+    st.subheader("Columnas y Tipos de Datos")
+    info_columnas = pd.DataFrame({
           "Columna": st.session_state.data.columns,
           "Tipo de dato": st.session_state.data.dtypes.astype(str)
-      })
-      info_columnas = info_columnas.reset_index(drop=True)
-      st.dataframe(info_columnas)
+    })
+    info_columnas = info_columnas.reset_index(drop=True)
+    st.dataframe(info_columnas)
 
-      # Tipos de variables
-      columnas_numericas = st.session_state.data.select_dtypes(
-          include="number"
-      ).columns.tolist()
+    # Tipos de variables
+    columnas_numericas = st.session_state.data.select_dtypes(
+         include="number"
+    ).columns.tolist()
       
-      columnas_categoricas = st.session_state.data.select_dtypes(
-          include=["object", "category"]
-      ).columns.tolist()
+    columnas_categoricas = st.session_state.data.select_dtypes(
+       include=["object", "category"]
+    ).columns.tolist()
       
-      columnas_fecha = st.session_state.data.select_dtypes(
-          include=["datetime64[ns]"]
-      ).columns.tolist()
+    columnas_fecha = st.session_state.data.select_dtypes(
+       include=["datetime64[ns]"]
+    ).columns.tolist()
       
-      # Mostrar mensaje si no hay variables de tipo numérica o categórica
-      st.write("**Validación de Variables:**")
-      if len(columnas_numericas) > 0:
-          st.write("- Se identificaron variables numéricas en el dataset.")
-      else:
-          st.write("- No se identificaron variables numéricas en el dataset.")
+    # Mostrar mensaje si no hay variables de tipo numérica o categórica
+    st.write("**Validación de Variables:**")
+    if len(columnas_numericas) > 0:
+       st.write("- Se identificaron variables numéricas en el dataset.")
+    else:
+       st.write("- No se identificaron variables numéricas en el dataset.")
       
-      if len(columnas_categoricas) > 0:
-          st.write("- Se identificaron variables categóricas en el dataset.")
-      else:
-          st.write("- No se identificaron variables categóricas en el dataset.")
+    if len(columnas_categoricas) > 0:
+      st.write("- Se identificaron variables categóricas en el dataset.")
+    else:
+         st.write("- No se identificaron variables categóricas en el dataset.")
       
-      if len(columnas_fecha) > 0:
-          st.write("- Se identificaron variables de fecha en el dataset.")
-      else:
-          st.write("- No se identificaron variables de fecha en el dataset.")
+    if len(columnas_fecha) > 0:
+      st.write("- Se identificaron variables de fecha en el dataset.")
+    else:
+      st.write("- No se identificaron variables de fecha en el dataset.")
 
-      # Información general
-      st.subheader("Información general")  
+    # Información general
+    st.subheader("Información general")  
       
-      # Dimensiones 
-      nfilas, ncolumnas = st.session_state.data.shape 
+    # Dimensiones 
+    nfilas, ncolumnas = st.session_state.data.shape 
 
-      # Métricas
-      total_nulos = st.session_state.data.isnull().sum().sum()
-      duplicados = st.session_state.data.duplicated().sum()
+    # Métricas
+    total_nulos = st.session_state.data.isnull().sum().sum()
+    duplicados = st.session_state.data.duplicated().sum()
 
-      # Mostrar dimensiones, tipos de variables y métricas en una tabla
-      st.write("- Número de registros:", nfilas)
-      st.write("- Número de variables:", ncolumnas)
-      st.write("- Variables numéricas identificadas:", len(columnas_numericas))
-      st.write("- Variables categóricas identificadas:", len(columnas_categoricas))
-      st.write("- Total de valores nulos:", total_nulos)
-      st.write("- Total de filas duplicadas:", duplicados)
+    # Mostrar dimensiones, tipos de variables y métricas en una tabla
+    st.write("- Número de registros:", nfilas)
+    st.write("- Número de variables:", ncolumnas)
+    st.write("- Variables numéricas identificadas:", len(columnas_numericas))
+    st.write("- Variables categóricas identificadas:", len(columnas_categoricas))
+    st.write("- Total de valores nulos:", total_nulos)
+    st.write("- Total de filas duplicadas:", duplicados)
 
-      # Selección de variables 
-      st.subheader("Selección de Variables")
-      columnas_seleccionadas = st.multiselect(
-          "Seleccione una o más columnas",
-          options=st.session_state.data.columns)
+    # Selección de variables 
+    st.subheader("Selección de Variables")
+    columnas_seleccionadas = st.multiselect(
+        "Seleccione una o más columnas",
+       options=st.session_state.data.columns)
 
-      # Mostrar estadísticas desccriptivas de las variables seleccionadas
-      if columnas_seleccionadas:
+     # Mostrar estadísticas desccriptivas de las variables seleccionadas
+    if columnas_seleccionadas:
         st.write("Resumen estadístico")
         st.dataframe(st.session_state.data[columnas_seleccionadas].describe(include="all"))
 
