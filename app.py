@@ -530,7 +530,7 @@ elif modulos == "Análisis visual":
     if len(columnas_categoricas_validas) >= 2:
         tab4.subheader("Mapa de interacción categórica")
         cat1 = columnas_categoricas_validas[0]
-        cat2 = ccolumnas_categoricas_validas[1]
+        cat2 = columnas_categoricas_validas[1]
         tabla = pd.crosstab(data[cat1], data[cat2])
         fig12, ax = plt.subplots()
         sns.heatmap(tabla, cmap="Blues", ax=ax)
