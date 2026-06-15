@@ -490,6 +490,22 @@ elif modulos == "Análisis visual":
     
     else:
         tab4.info("No hay suficientes variables categóricas.")   
+        
+    # Análisis combinado para tres variables
+    if len(columnas_numericas) >= 1 and len(columnas_categoricas) >= 1:
+        tab4.subheader("Análisis combinado (3 variables)")
+        col1, col2 = tab4.columns(2)
+
+        var_cat = col1.selectbox("Variable categórica", columnas_categoricas, key="combo_cat")
+        var_num = col2.selectbox("Variable numérica", columnas_numericas, key="combo_num")
+    
+        fig9 = px.box(data, x=var_cat, y=var_num, color=var_cat,
+                      title="Distribución combinada de " + var_num)
+    
+        tab4.plotly_chart(fig9)
+    
+    else:
+        tab4.info("No hay variables suficientes para análisis combinado.")
 
     # Tab5 Análisis temporal
     tab5.subheader("Análisis Temporal")
