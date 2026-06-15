@@ -16,8 +16,25 @@ if "nombre_archivo" not in st.session_state:
 # TÍTULOS E IDENTIFICACIÓN
 # Añadir titulo
 st.title("APLICACIÓN ANALIZADORA DE DATASETS CON STREAMLIT")
-# Añadir barra
-st.sidebar.title("Parámetros")
+
+# Crear módulos de vista
+#st.sidebar.image("logo.png")
+st.sidebar.title("Navegación")
+modulos = st.sidebar.selectbox("Seleccione un módulo",["🏠 Home","📂 Carga y perfil del dataset",
+                                                       "⚙️ Procesamiento de datos","📊 Análisis visual"])
+st.sidebar.markdown("---")
+
+st.sidebar.subheader("Información")
+if st.session_state.data is not None:
+    st.sidebar.success("Dataset cargado: " +  st.session_state.nombre_archivo)
+else:
+    st.sidebar.info("No hay dataset cargado")
+st.sidebar.markdown("---")
+
+st.sidebar.subheader("Diploma")
+st.sidebar.write("Business Analyst")
+
+st.sidebar.write("Exploración y Visualización de Datos con Python")
 # Añadir imagenes
 #st.image("Python_logo.png", width=300)
 # Añadir imagenes EN BARRA
@@ -29,10 +46,7 @@ st.markdown("---")
 
 
 
-# Crear módulos de vista
-modulos = st.sidebar.selectbox("Seleccione un módulo", ["Home", "Carga y perfil del dataset", "Procesamiento de datos", "Análisis visual"])
-
-if modulos == "Home" :
+if modulos == "🏠 Home" :
   st.subheader("BIENVENIDO A LA APLICACIÓN")
   # DETALLES DEL PROYECTO
     
@@ -76,7 +90,7 @@ if modulos == "Home" :
 
 
 
-elif modulos == "Carga y perfil del dataset":
+elif modulos == "📂 Carga y perfil del dataset":
   # Crear un cargador de archivos
   archivo = st.file_uploader("Cargue el archivo Excel o CSV", type=["csv", "xlsx"])
   
@@ -177,7 +191,7 @@ elif modulos == "Carga y perfil del dataset":
         st.dataframe(data[columnas_seleccionadas].describe(include="all"))
     
 
-elif modulos == "Procesamiento de datos":
+elif modulos == "⚙️ Procesamiento de datos":
 
   if st.session_state.data is not None:
         data = st.session_state.data
@@ -296,7 +310,7 @@ elif modulos == "Procesamiento de datos":
         st.write("Número de registros:", len(data_filtrada))     
         st.dataframe(data_filtrada)
 
-elif modulos == "Análisis visual":
+elif modulos == "📊 Análisis visual":
     
   if st.session_state.data is not None:
     data = st.session_state.data
