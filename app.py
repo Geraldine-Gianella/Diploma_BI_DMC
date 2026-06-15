@@ -89,8 +89,8 @@ elif modulos == "Carga y perfil del dataset":
     elif archivo.name.endswith(".xlsx"):
         st.session_state.data = pd.read_excel(archivo)
 
-  else:
-    st.write("Por favor cargue su archivo")
+    else:
+        st.write("Por favor cargue su archivo")
 
   # Mostrar información si ya existe una data cargada
   if st.session_state.data is not None:   
@@ -298,7 +298,4 @@ elif modulos == "Procesamiento de datos":
 
         # Evitar que la app se detenga por errores; usar validaciones y mensajes con st.warning(), st.info() o st.error().
 
-            
-          
-else :
-  st.write("Formato no válido")
+
