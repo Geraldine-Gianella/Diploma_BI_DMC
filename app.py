@@ -604,9 +604,9 @@ elif modulos == "📊 Análisis visual":
         sns.heatmap(tabla, cmap="Blues", ax=ax)
         tab4.pyplot(fig12)
 
-    # Scatter multivariado avanzado (3 numéricas y 1 categórica)
+    # Scatter multivariado (3 numéricas y 1 categórica)
     if len(columnas_numericas) >= 3 and len(columnas_categoricas_validas) >= 1:
-        tab4.subheader("Relación multivariada avanzada")  
+        tab4.subheader("Análisis de Cuatro Variables")  
         col1, col2, col3, col4 = tab4.columns(4)
         
         var_x = col1.selectbox("Variable X", columnas_numericas, key="mv4_x")
@@ -617,7 +617,7 @@ elif modulos == "📊 Análisis visual":
         var_cat = col4.selectbox("Color", columnas_categoricas_validas, key="mv4_cat")
         
         fig23 = px.scatter(data,x=var_x,y=var_y,size=var_size,color=var_cat,
-                           title=f"{var_x} vs {var_y} | Tamaño: {var_size} | Color: {var_cat}")
+                           title=f"{var_x} vs {var_y} segmentado por {var_cat} y tamaño según {var_size}")
         tab4.plotly_chart(fig23)
     
     else:
