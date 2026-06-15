@@ -32,8 +32,8 @@ else:
 st.sidebar.markdown("---")
 
 st.sidebar.subheader("Diploma Business Analyst")
-
 st.sidebar.write("Exploración y Visualización de Datos con Python")
+
 # Añadir imagenes
 #st.image("Python_logo.png", width=300)
 # Añadir imagenes EN BARRA
