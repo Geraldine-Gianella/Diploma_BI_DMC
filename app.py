@@ -559,16 +559,8 @@ elif modulos == "Análisis visual":
         df_temp["mes"] = df_temp[variable_fecha].dt.to_period("M").astype(str)
         tabla = df_temp.groupby("mes")[variable_num].mean().reset_index()
           
-        fig15 = px.line(
-            tabla,
-            x="mes",
-            y=variable_num,
-            markers=True,
-            title="Evolución animada de " + variable_num,
-            animation_frame="mes",
-            range_y=[tabla[variable_num].min(), tabla[variable_num].max()]
-        )
-    
+        fig15 = px.bar(tabla, x="mes", y=variable_num, animation_frame="mes",
+                       title="Evolución animada de " + variable_num)
         tab5.plotly_chart(fig15)
     
 
