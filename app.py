@@ -401,6 +401,21 @@ elif modulos == "Análisis visual":
     # Tab3 Análisis bivariado
     tab3.subheader("Correlaciones")
 
+    # Relación entre variables numéricas
+    if len(columnas_numericas) >= 2:
+        tab3.subheader("Relación entre variables numéricas")
+        col1, col2 = tab3.columns(2)
+    
+        variable_x = col1.selectbox("Variable X", columnas_numericas, key="x_scatter")
+        variable_y = col2.selectbox("Variable Y", columnas_numericas, key="y_scatter")
+    
+        fig4 = px.scatter(data, x=variable_x, y=variable_y, 
+                          title="Relación entre " + variable_x + " y " + variable_y)
+        tab3.plotly_chart(fig4)
+
+    else:
+        tab3.info("No hay suficientes variables numéricas para scatter plot.")    
+
     # Tab4 Análisis multivariado
     tab4.subheader("Variables Categóricas")
 
