@@ -594,9 +594,9 @@ elif modulos == "Análisis visual":
             tab5.plotly_chart(fig17)
     
         # Segmentación categórica 
-        if len(columnas_categoricas) > 0:
+        if len(columnas_categoricas_validas) > 0:
             tab5.subheader("Segmentación por categoría")
-            variable_cat = tab5.selectbox("Variable categórica", columnas_categoricas)
+            variable_cat = tab5.selectbox("Variable categórica", columnas_categoricas_validas)
             df_seg = df_temp.groupby(["periodo", variable_cat]).size().reset_index(name="cantidad")
             fig18 = px.line(df_seg, x="periodo", y="cantidad", color=variable_cat,  markers=True,
                              title="Evolución segmentada por " + variable_cat)
