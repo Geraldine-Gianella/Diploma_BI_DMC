@@ -460,20 +460,6 @@ elif modulos == "Análisis visual":
     else:
         tab3.info("No hay suficientes variables categóricas para comparación.")
 
-    # Tab4 Análisis multivariado
-    tab4.subheader("Variables Categóricas")
-
-    # Correlacion con heatmap 
-    if len(columnas_numericas) >= 2:
-        tab4.subheader("Matriz de correlación")
-        corr = data[columnas_numericas].corr()
-        fig7, ax = plt.subplots()
-        sns.heatmap(corr, annot=True, cmap="coolwarm", ax=ax)
-        tab4.pyplot(fig7)
-    
-    else:
-        tab4.info("No hay suficientes variables numéricas para correlación.")   
-
     # Barras apiladas para combinación de variables categóricas
     if len(columnas_categoricas) >= 2:
         tab4.subheader("Barras apiladas")
@@ -490,6 +476,21 @@ elif modulos == "Análisis visual":
     
     else:
         tab4.info("No hay suficientes variables categóricas.")   
+
+    # Tab4 Análisis multivariado
+    tab4.subheader("Variables Categóricas")
+
+    # Correlacion con heatmap 
+    if len(columnas_numericas) >= 2:
+        tab4.subheader("Matriz de correlación")
+        corr = data[columnas_numericas].corr()
+        fig7, ax = plt.subplots()
+        sns.heatmap(corr, annot=True, cmap="coolwarm", ax=ax)
+        tab4.pyplot(fig7)
+    
+    else:
+        tab4.info("No hay suficientes variables numéricas para correlación.")   
+
         
     # Análisis combinado para tres variables
     if len(columnas_numericas) >= 1 and len(columnas_categoricas) >= 1:
