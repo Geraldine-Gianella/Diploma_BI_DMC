@@ -85,8 +85,7 @@ if modulos == "🏠 Home" :
 
   if st.session_state.data is not None:
         st.success(f"Dataset cargado: {st.session_state.nombre_archivo}")
-  else:
-        st.info("Aún no se ha cargado ningún dataset.")
+
 
 
 
