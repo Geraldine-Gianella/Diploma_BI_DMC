@@ -16,6 +16,12 @@ if "nombre_archivo" not in st.session_state:
 # TÍTULOS E IDENTIFICACIÓN
 # Añadir titulo
 st.title("APLICACIÓN ANALIZADORA DE DATASETS CON STREAMLIT")
+st.write("Herramienta interactiva para la carga, procesamiento, exploración y "
+    "visualización de datos mediante Python y Streamlit.")
+st.write("**Elaborado por:** Geraldine Gianella Geronimo Oscanoa")
+st.write("**Año:** 2026")
+st.markdown("---")
+
 
 # Crear módulos de vista
 st.sidebar.title("Navegación")
@@ -38,11 +44,6 @@ st.sidebar.write("Exploración y Visualización de Datos con Python")
 #st.image("Python_logo.png", width=300)
 # Añadir imagenes EN BARRA
 #st.sidebar.image("DMC.png", width=100)
-
-st.write("Elaborado por: Geraldine Gianella Geronimo Oscanoa")
-st.write("**Año:** 2026")
-st.markdown("---")
-
 
 
 if modulos == "🏠 Home" :
