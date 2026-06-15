@@ -12,6 +12,6 @@ La aplicación fue construida con Streamlit y permite cargar distintos datasets 
 - Matplotlib
 - Seaborn
 - GitHub
-- 
+
 ### Uso de Inteligencia Artificial
 Durante el desarrollo del proyecto se utilizó inteligencia artificial como herramienta de apoyo para comprender algunos mensajes de error, resolver dudas sobre la lógica de programación y evaluar alternativas para determinadas visualizaciones. Asimismo, fue útil para complementar la documentación y mejorar algunos aspectos de la implementación. Sin embargo, el diseño, desarrollo, validación y adaptación de la aplicación fueron realizados de manera personal.
