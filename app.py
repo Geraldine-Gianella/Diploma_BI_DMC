@@ -526,6 +526,17 @@ elif modulos == "Análisis visual":
     else:
         tab4.info("No hay suficientes variables para segmentación.")
 
+    # Heatmap de interacción categórica 
+    if len(columnas_categoricas) >= 2:
+        tab4.subheader("Mapa de interacción categórica")
+        cat1 = columnas_categoricas[0]
+        cat2 = columnas_categoricas[1]
+        tabla = pd.crosstab(data[cat1], data[cat2])
+        fig12, ax = plt.subplots()
+        sns.heatmap(tabla, cmap="Blues", ax=ax)
+        tab4.pyplot(fig12)
+    
+
     # Tab5 Análisis temporal
     tab5.subheader("Análisis Temporal")
 
