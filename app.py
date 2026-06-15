@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 import seaborn as sns
 import matplotlib.pyplot as plt
+import numpy as np
 
 # CONFIGURACIÓN DE SESSION STATE
 # Guardamos el dataset cargado
@@ -715,61 +716,68 @@ elif modulos == "📊 Análisis visual":
             tab5.plotly_chart(fig20)
           
     # Tab6 Insights
-    tab6.subheader("Insights del Dataset")
+    tab6.subheader("Insights y Recomendaciones")
+    total_nulos = data.isnull().sum().sum()
+    duplicados = data.duplicated().sum()
+
+    # Hallazgos Clave
+    tab6.markdown("### Hallazgos Clave")
+    nfilas, ncolumnas = data.shape
+    tab6.write(f"• El dataset contiene {nfilas} registros y {ncolumnas} variables.")
+
+    if total_nulos > 0:
+        variable_nulos = data.isnull().sum().idxmax()
+        cantidad_nulos = data.isnull().sum().max()
+        tab6.write(f"• La variable '{variable_nulos}' presenta la mayor cantidad de valores faltantes ({cantidad_nulos}).")
+
+    if len(columnas_categoricas) > 0:
+        variable_cat = columnas_categoricas[0]
+        categoria_top = data[variable_cat].value_counts().idxmax()
+        frecuencia = data[variable_cat].value_counts().max()
+        tab6.write(f"• En la variable '{variable_cat}', la categoría predominante es '{categoria_top}' con {frecuencia} registros.")
+
+    if len(columnas_numericas) > 0:
+        dispersion = data[columnas_numericas].std()
+        variable_dispersion = dispersion.idxmax()
+        tab6.write(f"• La variable '{variable_dispersion}' presenta la mayor variabilidad dentro del dataset.")
+
+    if len(columnas_numericas) >= 2:
+        corr = data[columnas_numericas].corr().abs()
+        corr = corr.where(~np.eye(corr.shape[0], dtype=bool))
+        max_corr = corr.stack().idxmax()
+        valor_corr = corr.stack().max()
+        tab6.write(f"• La relación más fuerte se observa entre '{max_corr[0]}' y '{max_corr[1]}' (r = {valor_corr:.2f}).")
+
+    # Interpretación
+    tab6.markdown("### Interpretación de Resultados")
+
+    if len(columnas_numericas) > 0:
+        tab6.info("Las variables numéricas presentan diferentes niveles de dispersión, lo que sugiere la existencia de comportamientos heterogéneos dentro del conjunto de datos.")
     
-    if st.session_state.data is not None:
-        data = st.session_state.data
-        
-        # Métricas base
-        nfilas, ncolumnas = data.shape
-        total_nulos = data.isnull().sum().sum()
-        duplicados = data.duplicated().sum()
+    if len(columnas_categoricas) > 0:
+        tab6.info("La distribución de categorías permite identificar segmentos predominantes que podrían requerir análisis específicos.")
     
-        columnas_numericas = data.select_dtypes(include="number").columns.tolist()
-        columnas_categoricas = data.select_dtypes(include=["object", "category"]).columns.tolist()
+    if len(columnas_numericas) >= 2:
+        tab6.info("Las relaciones detectadas entre variables pueden contribuir a explicar patrones relevantes para el análisis del negocio.")
+
+    # Recomendaciones para la toma de decisiones
+    tab6.markdown("### Recomendaciones")
+
+    if total_nulos > 0:
+        tab6.write("• Revisar y tratar los valores faltantes antes de desarrollar análisis predictivos o modelos estadísticos.")
     
-        # Hallazgos automáticos simples
-        tab6.write("**Resumen general del dataset:**")
-        tab6.write("- Número de registros:"+ str(nfilas))
-        tab6.write("- Número de variables:"+ str(ncolumnas))
-        tab6.write("- Variables numéricas:"+ str(columnas_numericas))
-        tab6.write("- Variables categóricas:"+ str(columnas_categoricas))
-        tab6.write("- Valores nulos totales:"+ str(total_nulos))
-        tab6.write("- Filas duplicadas:"+ str(duplicados))
-        tab6.markdown("---")
+    if duplicados > 0:
+        tab6.write("• Validar los registros duplicados para evitar sesgos en los resultados.")
     
-        # Calidad de datos
-        if total_nulos > 0:
-            tab6.warning("Se detectan valores nulos que pueden afectar el análisis. Se recomienda tratamiento previo.")
-        else:
-            tab6.success("No se detectan valores nulos en el dataset.")
+    if len(columnas_categoricas) > 0:
+        tab6.write("• Analizar con mayor detalle las categorías con mayor participación para identificar oportunidades o riesgos.")
     
-        if duplicados > 0:
-            tab6.warning("Existen filas duplicadas que podrían sesgar los resultados.")
-        else:
-            tab6.success("No se detectan filas duplicadas.")
+    if len(columnas_numericas) >= 2:
+        tab6.write("• Profundizar el estudio de las variables con mayor correlación para comprender posibles factores asociados.")
     
-        # Balance de variables
-        if len(columnas_numericas) > len(columnas_categoricas):
-            tab6.info("El dataset está dominado por variables numéricas, lo que favorece análisis estadísticos.")
-        else:
-            tab6.info("El dataset tiene predominancia de variables categóricas, útil para segmentación.")
+    tab6.write("• Complementar este análisis exploratorio con técnicas estadísticas o predictivas según los objetivos del negocio.")
     
-        # Complejidad del dataset
-        if ncolumnas > 15:
-            tab6.info("Dataset con alta dimensionalidad, se recomienda técnicas de reducción o segmentación.")
-        else:
-            tab6.info("Dataset con dimensionalidad manejable para análisis exploratorio.")
-    
-        # Conclusión final simple
-        tab6.markdown("### Conclusión general")
-    
-        if total_nulos == 0 and duplicados == 0:
-            tab6.write("El dataset es limpio y adecuado para análisis exploratorio inmediato.")
-        else:
-            tab6.write("El dataset requiere limpieza previa antes de un análisis avanzado.")
-    else:
-        tab6.info("No hay dataset cargado.")
+
 
   else:
     st.warning("Primero debe cargar un dataset.")
