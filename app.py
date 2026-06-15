@@ -48,8 +48,10 @@ st.sidebar.write("Exploración y Visualización de Datos con Python")
 
 if modulos == "🏠 Home" :
   st.subheader("BIENVENIDO A LA APLICACIÓN")
+  st.info("Esta aplicación permite cargar, procesar, explorar y visualizar datasets "
+    "de forma interactiva para apoyar el análisis y la toma de decisiones.")
+
   # DETALLES DEL PROYECTO
-    
   st.subheader("Objetivo y Alcance")
   st.write(
         "El objetivo de este proyecto es proveer una herramienta interactiva para "
@@ -61,10 +63,17 @@ if modulos == "🏠 Home" :
   st.markdown("---")
     
   st.subheader("Datasets Disponibles")
-  st.write("**1. AI Impact on Jobs 2030:** Evaluación del impacto de la IA en el mercado laboral, riesgos de reemplazo y salarios.")
-  st.write("**2. Sample - Superstore:** Datos de ventas, pedidos y ganancias de una tienda minorista para análisis comercial.")
-  st.write("**3. Synthetic E-commerce Order Risk:** Datos enfocados en la detección de fraudes y riesgos en transacciones electrónicas.")
-  st.write("**4. Teen Mental Health Dataset:** Análisis del impacto de redes sociales y tiempo de pantalla en el bienestar emocional de adolescentes.")
+  st.write("📌 AI Impact on Jobs 2030")
+  st.write("Impacto de la inteligencia artificial en empleos y salarios.")
+    
+  st.write("📌 Sample Superstore")
+  st.write("Información de ventas, pedidos y ganancias.")
+    
+  st.write("📌 Synthetic E-commerce Order Risk")
+  st.write("Detección de fraude y riesgo en pedidos.")
+    
+  st.write("📌 Teen Mental Health Dataset")
+  st.write("Relación entre redes sociales y bienestar emocional.")
     
   st.markdown("---")
     
