@@ -414,7 +414,24 @@ elif modulos == "Análisis visual":
         tab3.plotly_chart(fig4)
 
     else:
-        tab3.info("No hay suficientes variables numéricas para scatter plot.")    
+        tab3.info("No hay suficientes variables numéricas para scatter plot.") 
+        
+    # Boxplot por categoría (numérica vs categórica)
+    if len(columnas_categoricas) > 0 and len(columnas_numericas) > 0:
+        tab3.subheader("Distribución por categoría")
+        col1, col2 = tab3.columns(2)
+    
+        variable_cat = col1.selectbox("Variable categórica", columnas_categoricas,
+                                      key="cat_box")
+        variable_num = col2.selectbox("Variable numérica", columnas_numericas, 
+                                      key="num_box")
+    
+        fig5 = px.box(data, x=variable_cat, y=variable_num, 
+                      title="Distribución de " + variable_num + " por " + variable_cat)
+        tab3.plotly_chart(fig5)
+    
+    else:
+        tab3.info("No hay variables suficientes para boxplot por categoría.")
 
     # Tab4 Análisis multivariado
     tab4.subheader("Variables Categóricas")
