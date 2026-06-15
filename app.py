@@ -465,8 +465,8 @@ elif modulos == "Análisis visual":
 
     # Barras apiladas para combinación de variables categóricas
     if len(columnas_categoricas_validas) >= 2:
-        tab4.subheader("Barras apiladas")
-        col1, col2 = tab4.columns(2)
+        tab3.subheader("Barras apiladas")
+        col1, col2 = tab3.columns(2)
     
         cat1 = col1.selectbox("Categoría base", columnas_categoricas_validas, key="stack_cat1")
         opciones_cat2 = [c for c in columnas_categoricas_validas if c != cat1]
@@ -475,13 +475,13 @@ elif modulos == "Análisis visual":
     
         fig8 = px.bar(tabla, x=cat1, y="cantidad", color=cat2, barmode="stack",
                       title="Barras apiladas: " + cat1 + " vs " + cat2)
-        tab4.plotly_chart(fig8)
+        tab3.plotly_chart(fig8)
     
     else:
-        tab4.info("No hay suficientes variables categóricas.")   
+        tab3.info("No hay suficientes variables categóricas.")   
 
     # Tab4 Análisis multivariado
-    tab4.subheader("Variables Categóricas")
+    tab4.subheader("Análisis Multivariado")
 
     # Correlacion con heatmap 
     if len(columnas_numericas) >= 2:
