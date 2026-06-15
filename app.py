@@ -296,6 +296,25 @@ elif modulos == "Procesamiento de datos":
         st.write("Número de registros:", len(data_filtrada))     
         st.dataframe(data_filtrada)
 
-        # Evitar que la app se detenga por errores; usar validaciones y mensajes con st.warning(), st.info() o st.error().
+elif modulos == "Análisis visual":
+    
+    if st.session_state.data is not None:
+      data = st.session_state.data
+      tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+            "Distribuciones",
+            "Comparaciones",
+            "Correlaciones",
+            "Categorías",
+            "Fechas",
+            "Dashboard"])
 
+        tab1.subheader("Distribución de Variables Numéricas")
+        tab2.subheader("Comparación entre Variables")
+        tab3.subheader("Correlaciones")
+        tab4.subheader("Variables Categóricas")
+        tab5.subheader("Análisis Temporal")
+        tab6.subheader("Dashboard General")
 
+    else:
+        st.warning("Primero debe cargar un dataset.")
+          
