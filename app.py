@@ -328,12 +328,11 @@ elif modulos == "Análisis visual":
     col1.metric("Filas", nfilas)
     col2.metric("Columnas", ncolumnas)
     col3.metric("Duplicados", duplicados)
+      
     col4, col5, col6 = tab1.columns(3)
-    
     col4.metric("Variables numéricas", len(columnas_numericas))
     col5.metric("Variables categóricas", len(columnas_categoricas))
-    col6.metric("Valores nulos", nulos)
-    
+    col6.metric("Valores nulos", nulos)  
     tab1.markdown("---")  
 
     # Vista del dataset
@@ -341,22 +340,42 @@ elif modulos == "Análisis visual":
     tab1.dataframe(data.head())
     
     # Estructura del dataset
-    tab1.subheader("Estructura del dataset")
-    
+    tab1.subheader("Estructura del dataset")    
     info = pd.DataFrame({
         "Columna": data.columns,
         "Tipo de dato": data.dtypes.astype(str)
-    }).reset_index(drop=True)
-    
+    }).reset_index(drop=True)   
     tab1.dataframe(info)
     
     # Resumen estadístico
-    tab1.subheader("Resumen estadístico")
-    
+    tab1.subheader("Resumen estadístico")   
     tab1.dataframe(data.describe(include="all"))
 
     # Tab2 Análisis univariado
     tab2.subheader("Comparación entre Variables")
+      
+    # Separar variables
+    columnas_numericas = data.select_dtypes(include="number").columns.tolist()
+    columnas_categoricas = data.select_dtypes(include=["object", 
+                                                       "category"]).columns.tolist()
+
+    # Gráficos para variables numéricas
+    if len(columnas_numericas) > 0:
+        tab2.subheader("Distribución de variables numéricas")
+        variable_num = tab2.selectbox("Seleccione variable numérica", 
+                                      columnas_numericas)
+        col1, col2 = tab2.columns(2)
+    
+        # Histograma
+        fig1 = px.histogram(data, x=variable_num, title="Histograma de " + variable_num)
+        col1.plotly_chart(fig1)
+    
+        # Boxplot
+        fig2 = px.box(data, y=variable_num, title="Boxplot de " + variable_num)
+        col2.plotly_chart(fig2)
+    
+    else:
+        tab2.info("No hay variables numéricas en el dataset.")  
 
     # Tab3 Análisis bivariado
     tab3.subheader("Correlaciones")
