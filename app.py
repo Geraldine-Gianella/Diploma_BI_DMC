@@ -562,7 +562,7 @@ elif modulos == "Análisis visual":
         fig13 = px.line(tabla, x="mes", y=variable_num, 
                       title="Evolución de " + variable_num + " en el tiempo")
         tab5.plotly_chart(fig13)
-     else:
+    else:
         tabla = df_temp.groupby("mes").size().reset_index(name="cantidad")
         fig14 = px.line(tabla, x="mes", y="cantidad", title="Evolución de registros en el tiempo")
         tab5.plotly_chart(fig14)
