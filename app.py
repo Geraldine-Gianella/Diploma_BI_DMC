@@ -311,19 +311,48 @@ elif modulos == "Análisis visual":
       
     # Tab1 Resumen 
     tab1.subheader("Resumen del Dataset")
+    
+    # Dimensiones
     nfilas, ncolumnas = data.shape
+    
+    # Tipos de variables
     columnas_numericas = data.select_dtypes(include="number").columns.tolist()
     columnas_categoricas = data.select_dtypes(include=["object", "category"]).columns.tolist()
+    
+    # Métricas generales
     nulos = data.isnull().sum().sum()
     duplicados = data.duplicated().sum()
+    
+    # KPIs con columns 
+    col1, col2, col3 = tab1.columns(3)
+    col1.metric("Filas", nfilas)
+    col2.metric("Columnas", ncolumnas)
+    col3.metric("Duplicados", duplicados)
+    col4, col5, col6 = tab1.columns(3)
+    
+    col4.metric("Variables numéricas", len(columnas_numericas))
+    col5.metric("Variables categóricas", len(columnas_categoricas))
+    col6.metric("Valores nulos", nulos)
+    
+    tab1.markdown("---")  
 
-    tab1.write(f"Número de filas: {nfilas}")
-    tab1.write(f"Número de columnas: {ncolumnas}")
-    tab1.write(f"Variables numéricas: {len(columnas_numericas)}")
-    tab1.write(f"Variables categóricas: {len(columnas_categoricas)}")
-    tab1.write(f"Valores nulos: {nulos}")
-    tab1.write(f"Filas duplicadas: {duplicados}")
-
+    # Vista del dataset
+    tab1.subheader("Vista previa del dataset")
+    tab1.dataframe(data.head())
+    
+    # Estructura del dataset
+    tab1.subheader("Estructura del dataset")
+    
+    info = pd.DataFrame({
+        "Columna": data.columns,
+        "Tipo de dato": data.dtypes.astype(str)
+    }).reset_index(drop=True)
+    
+    tab1.dataframe(info)
+    
+    # Resumen estadístico
+    tab1.subheader("Resumen estadístico")
+    
     tab1.dataframe(data.describe(include="all"))
 
     # Tab2 Análisis univariado
