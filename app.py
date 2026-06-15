@@ -626,7 +626,61 @@ elif modulos == "Análisis visual":
             tab5.plotly_chart(fig20)
           
     # Tab6 Insights
-    tab6.subheader("Dashboard General")
+    tab6.subheader("Insights del Dataset")
+    
+    if st.session_state.data is not None:
+        data = st.session_state.data
+        
+        # Métricas base
+        nfilas, ncolumnas = data.shape
+        total_nulos = data.isnull().sum().sum()
+        duplicados = data.duplicated().sum()
+    
+        columnas_numericas = data.select_dtypes(include="number").columns.tolist()
+        columnas_categoricas = data.select_dtypes(include=["object", "category"]).columns.tolist()
+    
+        # Hallazgos automáticos simples
+        tab6.write("**Resumen general del dataset:**")
+        tab6.write("- Número de registros:", nfilas)
+        tab6.write("- Número de variables:", ncolumnas)
+        tab6.write("- Variables numéricas:", len(columnas_numericas))
+        tab6.write("- Variables categóricas:", len(columnas_categoricas))
+        tab6.write("- Valores nulos totales:", total_nulos)
+        tab6.write("- Filas duplicadas:", duplicados)
+        tab6.markdown("---")
+    
+        # Calidad de datos
+        if total_nulos > 0:
+            tab6.warning("Se detectan valores nulos que pueden afectar el análisis. Se recomienda tratamiento previo.")
+        else:
+            tab6.success("No se detectan valores nulos en el dataset.")
+    
+        if duplicados > 0:
+            tab6.warning("Existen filas duplicadas que podrían sesgar los resultados.")
+        else:
+            tab6.success("No se detectan filas duplicadas.")
+    
+        # Balance de variables
+        if len(columnas_numericas) > len(columnas_categoricas):
+            tab6.info("El dataset está dominado por variables numéricas, lo que favorece análisis estadísticos.")
+        else:
+            tab6.info("El dataset tiene predominancia de variables categóricas, útil para segmentación.")
+    
+        # Complejidad del dataset
+        if ncolumnas > 15:
+            tab6.info("Dataset con alta dimensionalidad, se recomienda técnicas de reducción o segmentación.")
+        else:
+            tab6.info("Dataset con dimensionalidad manejable para análisis exploratorio.")
+    
+        # Conclusión final simple
+        tab6.markdown("### Conclusión general")
+    
+        if total_nulos == 0 and duplicados == 0:
+            tab6.write("El dataset es limpio y adecuado para análisis exploratorio inmediato.")
+        else:
+            tab6.write("El dataset requiere limpieza previa antes de un análisis avanzado.")
+    else:
+        tab6.info("No hay dataset cargado.")
 
   else:
     st.warning("Primero debe cargar un dataset.")
