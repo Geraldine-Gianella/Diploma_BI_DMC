@@ -166,7 +166,8 @@ elif modulos == "Carga y perfil del dataset":
     
     # Selección de variables 
     st.subheader("Selección de Variables")
-    columnas_seleccionadas = st.multiselect("Seleccione una o más columnas",options=data.columns)
+    columnas_seleccionadas = st.multiselect("Seleccione una o más columnas",
+                                            options=data.columns)
     
     # Mostrar estadísticas desccriptivas de las variables seleccionadas
     if columnas_seleccionadas:
@@ -265,69 +266,34 @@ elif modulos == "Procesamiento de datos":
         data_filtrada = data
         # Filtro categórico
         if len(columnas_categoricas) > 0:
-        
-            variable_cat = st.selectbox(
-                "Variable categórica",
-                columnas_categoricas
-            )
-        
-            categorias = st.multiselect(
-                "Seleccione categorías",
-                data[variable_cat].dropna().unique()
-            )
+            variable_cat = st.selectbox("Variable categórica", columnas_categoricas)
+            categorias = st.multiselect("Seleccione categorías", 
+                                        data[variable_cat].dropna().unique())
         
             if categorias:
                 data_filtrada = data_filtrada[data_filtrada[variable_cat].isin(categorias)]
 
-
             # Filtro numérico 
-            if len(columnas_numericas) > 0:
-            
-                variable_num = st.selectbox(
-                    "Variable numérica",
-                    columnas_numericas
-                )
-            
+            if len(columnas_numericas) > 0:           
+                variable_num = st.selectbox("Variable numérica", columnas_numericas)
                 minimo = float(data[variable_num].min())
                 maximo = float(data[variable_num].max())
-            
-                rango = st.slider(
-                    "Seleccione rango",
-                    minimo,
-                    maximo,
-                    (minimo, maximo)
-                )
-            
+                rango = st.slider("Seleccione rango", minimo, maximo, (minimo, maximo))           
                 data_filtrada = data_filtrada[
                     (data_filtrada[variable_num] >= rango[0]) &
-                    (data_filtrada[variable_num] <= rango[1])
-                ]
-
+                    (data_filtrada[variable_num] <= rango[1])]
 
                 # Filtros por fechas 
                 if len(columnas_fecha) > 0:
-                
-                    variable_fecha = st.selectbox(
-                        "Variable fecha",
-                        columnas_fecha
-                    )
-                
+                    variable_fecha = st.selectbox("Variable fecha", columnas_fecha)
                     fecha_min = data[variable_fecha].min()
                     fecha_max = data[variable_fecha].max()
-                
-                    fechas = st.date_input(
-                        "Seleccione rango de fechas",
-                        value=(fecha_min, fecha_max)
-                    )
+                    fechas = st.date_input("Seleccione rango de fechas",
+                        value=(fecha_min, fecha_max))
 
                     # Mostrar resultado
                     st.subheader("Dataset Filtrado")
-                    
-                    st.write(
-                        "Número de registros:",
-                        len(data_filtrada)
-                    )
-                    
+                    st.write("Número de registros:", len(data_filtrada))     
                     st.dataframe(data_filtrada)
 
         # Evitar que la app se detenga por errores; usar validaciones y mensajes con st.warning(), st.info() o st.error().
