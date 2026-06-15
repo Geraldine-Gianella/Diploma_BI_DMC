@@ -461,6 +461,17 @@ elif modulos == "Análisis visual":
     # Tab4 Análisis multivariado
     tab4.subheader("Variables Categóricas")
 
+    # Correlacion con heatmap 
+    if len(columnas_numericas) >= 2:
+        tab4.subheader("Matriz de correlación")
+        corr = data[columnas_numericas].corr()
+        fig7, ax = plt.subplots()
+        sns.heatmap(corr, annot=True, cmap="coolwarm", ax=ax)
+        tab4.pyplot(fig7)
+    
+    else:
+        tab4.info("No hay suficientes variables numéricas para correlación.")    
+
     # Tab5 Análisis temporal
     tab5.subheader("Análisis Temporal")
 
