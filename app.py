@@ -487,9 +487,9 @@ elif modulos == "Análisis visual":
     else:
         tab4.info("No hay suficientes variables numéricas para correlación.")
 
-    # Scatter multivariado 
+    # Scatter multivariado (2 numéricas y 1 categorica)
     if len(columnas_numericas) >= 2 and len(columnas_categoricas_validas) >= 1:
-        tab4.subheader("Relación multivariada (3 variables)")
+        tab4.subheader("Relación multivariada")
         col1, col2, col3 = tab4.columns(3)
         var_x = col1.selectbox("Variable X", columnas_numericas, key="mv_x")
         var_y = col2.selectbox("Variable Y", columnas_numericas, key="mv_y")
@@ -500,7 +500,31 @@ elif modulos == "Análisis visual":
     
     else:
         tab4.info("No hay suficientes variables para scatter multivariado.")
-      
+
+    # Segmentación múltiple (1 numerica y 2 categoricas)
+    if len(columnas_numericas) >= 1 and len(columnas_categoricas_validas) >= 2:
+    
+        tab4.subheader("Segmentación multivariada")
+    
+        col1, col2, col3 = tab4.columns(3)
+    
+        var_cat1 = col1.selectbox("Categoría 1", columnas_categoricas_validas, key="seg1")
+        opciones_cat2 = [c for c in columnas_categoricas_validas if c != var_cat1]
+    
+        var_cat2 = col2.selectbox("Categoría 2", opciones_cat2, key="seg2")
+    
+        var_num = col3.selectbox("Variable numérica", columnas_numericas, key="seg_num")
+    
+        df_temp = data[[var_cat1, var_cat2, var_num]].dropna()
+    
+        tabla = df_temp.groupby([var_cat1, var_cat2])[var_num].mean().reset_index()
+    
+        fig11 = px.bar(tabla, x=var_cat1, y=var_num, color=var_cat2, barmode="group",
+                       title="Segmentación multivariada de " + var_num)
+        tab4.plotly_chart(fig11)
+    
+    else:
+        tab4.info("No hay suficientes variables para segmentación.")
 
     # Tab5 Análisis temporal
     tab5.subheader("Análisis Temporal")
