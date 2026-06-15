@@ -360,7 +360,10 @@ elif modulos == "Análisis visual":
     columnas_numericas = data.select_dtypes(include="number").columns.tolist()
     columnas_categoricas = data.select_dtypes(include=["object", 
                                                        "category"]).columns.tolist()
-
+    columnas_categoricas_validas = [
+    col for col in columnas_categoricas
+    if data[col].nunique() <= 15]
+    
     # Gráficos para variables numéricas
     if len(columnas_numericas) > 0:
         tab2.subheader("Distribución de variables numéricas")
@@ -380,9 +383,9 @@ elif modulos == "Análisis visual":
         tab2.info("No hay variables numéricas en el dataset.")
 
     # Gráficos para variables categóricas
-    if len(columnas_categoricas) > 0:
+    if len(columnas_categoricas_validas) > 0:
         tab2.subheader("Distribución de variables categóricas")
-        variable_cat = tab2.selectbox("Seleccione variable categórica",columnas_categoricas)
+        variable_cat = tab2.selectbox("Seleccione variable categórica",columnas_categoricas_validas)
         conteo = data[variable_cat].value_counts().reset_index()
         conteo.columns = [variable_cat, "cantidad"]
         col1, col2 = tab2.columns(2)
@@ -419,11 +422,11 @@ elif modulos == "Análisis visual":
         tab3.info("No hay suficientes variables numéricas para scatter plot.") 
         
     # Boxplot por categoría (numérica vs categórica)
-    if len(columnas_categoricas) > 0 and len(columnas_numericas) > 0:
+    if len(columnas_categoricas_validas) > 0 and len(columnas_numericas) > 0:
         tab3.subheader("Distribución por categoría")
         col1, col2 = tab3.columns(2)
     
-        variable_cat = col1.selectbox("Variable categórica", columnas_categoricas,
+        variable_cat = col1.selectbox("Variable categórica", columnas_categoricas_validas,
                                       key="cat_box")
         variable_num = col2.selectbox("Variable numérica", columnas_numericas, 
                                       key="num_box")
@@ -436,13 +439,13 @@ elif modulos == "Análisis visual":
         tab3.info("No hay variables suficientes para boxplot por categoría.")
 
     # Comparación categórica con barras agrupadas
-    if len(columnas_categoricas) >= 2:
+    if len(columnas_categoricas_validas) >= 2:
         tab3.subheader("Comparación entre variables categóricas")
         col1, col2 = tab3.columns(2)
-        cat1 = col1.selectbox("Variable categórica 1", columnas_categoricas, key="cat1_bar")
+        cat1 = col1.selectbox("Variable categórica 1", columnas_categoricas_validas, key="cat1_bar")
         
         # Evitar seleccionar la misma variable dos veces
-        opciones_cat2 = [c for c in columnas_categoricas if c != cat1]
+        opciones_cat2 = [c for c in columnas_categoricas_validas if c != cat1]
         cat2 = col2.selectbox("Variable categórica 2", opciones_cat2, key="cat2_bar")
     
         # Crear tabla de frecuencias
@@ -461,12 +464,12 @@ elif modulos == "Análisis visual":
         tab3.info("No hay suficientes variables categóricas para comparación.")
 
     # Barras apiladas para combinación de variables categóricas
-    if len(columnas_categoricas) >= 2:
+    if len(columnas_categoricas_validas) >= 2:
         tab4.subheader("Barras apiladas")
         col1, col2 = tab4.columns(2)
     
-        cat1 = col1.selectbox("Categoría base", columnas_categoricas, key="stack_cat1")
-        opciones_cat2 = [c for c in columnas_categoricas if c != cat1]
+        cat1 = col1.selectbox("Categoría base", columnas_categoricas_validas, key="stack_cat1")
+        opciones_cat2 = [c for c in columnas_categoricas_validas if c != cat1]
         cat2 = col2.selectbox("Segmentación", opciones_cat2, key="stack_cat2")
         tabla = (data[[cat1, cat2]].dropna().groupby([cat1, cat2]).size().reset_index(name="cantidad"))
     
@@ -493,11 +496,11 @@ elif modulos == "Análisis visual":
 
         
     # Análisis combinado para tres variables
-    if len(columnas_numericas) >= 1 and len(columnas_categoricas) >= 1:
+    if len(columnas_numericas) >= 1 and len(columnas_categoricas_validas) >= 1:
         tab4.subheader("Análisis combinado (3 variables)")
         col1, col2 = tab4.columns(2)
 
-        var_cat = col1.selectbox("Variable categórica", columnas_categoricas, key="combo_cat")
+        var_cat = col1.selectbox("Variable categórica", columnas_categoricas_validas, key="combo_cat")
         var_num = col2.selectbox("Variable numérica", columnas_numericas, key="combo_num")
     
         fig9 = px.box(data, x=var_cat, y=var_num, color=var_cat,
