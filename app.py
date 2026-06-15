@@ -478,31 +478,15 @@ elif modulos == "Análisis visual":
 
     # Correlacion con heatmap 
     if len(columnas_numericas) >= 2:
-        tab4.subheader("Matriz de correlación")
+        tab4.subheader("Correlación entre variables numéricas")
         corr = data[columnas_numericas].corr()
-        fig7, ax = plt.subplots()
-        sns.heatmap(corr, annot=True, cmap="coolwarm", ax=ax)
-        tab4.pyplot(fig7)
+        fig9, ax = plt.subplots()
+        sns.heatmap(corr, annot=False, cmap="coolwarm", ax=ax)
+        tab4.pyplot(fig9)
     
     else:
-        tab4.info("No hay suficientes variables numéricas para correlación.")   
-
-        
-    # Análisis combinado para tres variables
-    if len(columnas_numericas) >= 1 and len(columnas_categoricas_validas) >= 1:
-        tab4.subheader("Análisis combinado (3 variables)")
-        col1, col2 = tab4.columns(2)
-
-        var_cat = col1.selectbox("Variable categórica", columnas_categoricas_validas, key="combo_cat")
-        var_num = col2.selectbox("Variable numérica", columnas_numericas, key="combo_num")
-    
-        fig9 = px.box(data, x=var_cat, y=var_num, color=var_cat,
-                      title="Distribución combinada de " + var_num)
-    
-        tab4.plotly_chart(fig9)
-    
-    else:
-        tab4.info("No hay variables suficientes para análisis combinado.")
+        tab4.info("No hay suficientes variables numéricas para correlación.")
+      
 
     # Tab5 Análisis temporal
     tab5.subheader("Análisis Temporal")
