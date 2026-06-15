@@ -137,17 +137,9 @@ elif modulos == "📂 Carga y perfil del dataset":
     duplicados = data.duplicated().sum()
 
     # Tipos de variables
-    columnas_numericas = data.select_dtypes(
-            include="number"
-    ).columns.tolist()
-          
-    columnas_categoricas = data.select_dtypes(
-         include=["object", "category"]
-    ).columns.tolist()
-          
-    columnas_fecha = data.select_dtypes(
-          include=["datetime64[ns]"]
-    ).columns.tolist()
+    columnas_numericas = data.select_dtypes(include="number").columns.tolist()
+    columnas_categoricas = data.select_dtypes(include=["object", "category"]).columns.tolist()
+    columnas_fecha = data.select_dtypes(include=["datetime64[ns]"]).columns.tolist()
     
     # Mostrar dimensiones, tipos de variables y métricas en una tabla
     st.write("- Número de registros:", nfilas)
