@@ -308,12 +308,12 @@ elif modulos == "Análisis visual":
             "Fechas",
             "Dashboard"])
 
-        tab1.subheader("Distribución de Variables Numéricas")
-        tab2.subheader("Comparación entre Variables")
-        tab3.subheader("Correlaciones")
-        tab4.subheader("Variables Categóricas")
-        tab5.subheader("Análisis Temporal")
-        tab6.subheader("Dashboard General")
+      tab1.subheader("Distribución de Variables Numéricas")
+      tab2.subheader("Comparación entre Variables")
+      tab3.subheader("Correlaciones")
+      tab4.subheader("Variables Categóricas")
+      tab5.subheader("Análisis Temporal")
+      tab6.subheader("Dashboard General")
 
     else:
         st.warning("Primero debe cargar un dataset.")
