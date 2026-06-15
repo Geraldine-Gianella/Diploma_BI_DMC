@@ -375,8 +375,29 @@ elif modulos == "Análisis visual":
         col2.plotly_chart(fig2)
     
     else:
-        tab2.info("No hay variables numéricas en el dataset.")  
+        tab2.info("No hay variables numéricas en el dataset.")
 
+    # Gráficos para variables categóricas
+    if len(columnas_categoricas) > 0:
+        tab2.subheader("Distribución de variables categóricas")
+        variable_cat = tab2.selectbox("Seleccione variable categórica",columnas_categoricas)
+        conteo = data[variable_cat].value_counts().reset_index()
+        conteo.columns = [variable_cat, "cantidad"]
+        col1, col2 = tab2.columns(2)
+    
+        # Gráfico de barras
+        fig3 = px.bar(conteo, x=variable_cat, y="cantidad", title="Conteo de " + variable_cat)
+        col1.plotly_chart(fig3)
+    
+        # Gráfico de proporciones
+        conteo["proporcion"] = conteo["cantidad"] / conteo["cantidad"].sum()
+        fig4 = px.pie(conteo, names=variable_cat, values="cantidad", 
+                      title="Proporciones de " + variable_cat)
+        col2.plotly_chart(fig4)
+    
+    else:
+        tab2.info("No hay variables categóricas en el dataset.")
+      
     # Tab3 Análisis bivariado
     tab3.subheader("Correlaciones")
 
