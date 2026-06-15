@@ -420,7 +420,7 @@ elif modulos == "📊 Análisis visual":
     # Tab3 Análisis bivariado
     tab3.subheader("Correlaciones")
 
-    # Relación entre variables numéricas
+    # Gráfico: Relación entre variables numéricas
     if len(columnas_numericas) >= 2:
         tab3.subheader("Relación entre variables numéricas")
         col1, col2 = tab3.columns(2)
@@ -435,7 +435,7 @@ elif modulos == "📊 Análisis visual":
     else:
         tab3.info("No hay suficientes variables numéricas para scatter plot.") 
         
-    # Boxplot por categoría (numérica vs categórica)
+    # Gráfico: Boxplot por categoría (numérica vs categórica)
     if len(columnas_categoricas_validas) > 0 and len(columnas_numericas) > 0:
         tab3.subheader("Distribución por categoría")
         col1, col2 = tab3.columns(2)
@@ -452,7 +452,7 @@ elif modulos == "📊 Análisis visual":
     else:
         tab3.info("No hay variables suficientes para boxplot por categoría.")
 
-    # Comparación categórica con barras agrupadas
+    # Gráfico: Comparación categórica con barras agrupadas
     if len(columnas_categoricas_validas) >= 2:
         tab3.subheader("Comparación entre variables categóricas")
         col1, col2 = tab3.columns(2)
@@ -470,7 +470,7 @@ elif modulos == "📊 Análisis visual":
     else:
         tab3.info("No hay suficientes variables categóricas para comparación.")
 
-    # Barras apiladas para combinación de variables categóricas
+    # Gráfico: Barras apiladas para combinación de variables categóricas
     if len(columnas_categoricas_validas) >= 2:
         tab3.subheader("Barras apiladas")
         col1, col2 = tab3.columns(2)
@@ -485,7 +485,36 @@ elif modulos == "📊 Análisis visual":
         tab3.plotly_chart(fig8)
     
     else:
-        tab3.info("No hay suficientes variables categóricas.")   
+        tab3.info("No hay suficientes variables categóricas.") 
+
+    # Gráfico: Barras agregadas
+    tab3.subheader("Métrica agregada por categoría")
+    
+    if len(columnas_categoricas_validas) > 0 and len(columnas_numericas) > 0:
+        col1, col2, col3 = tab3.columns(3)
+        variable_cat = col1.selectbox("Variable categórica",columnas_categoricas_validas,
+                                      key="bar_cat")
+        variable_num = col2.selectbox("Variable numérica",columnas_numericas,key="bar_num")
+    
+        operacion = col3.selectbox("Agregación",["Suma", "Promedio"])
+    
+        if operacion == "Suma":
+            tabla = (data.groupby(variable_cat)[variable_num].sum().reset_index())
+    
+        else:
+            tabla = (data.groupby(variable_cat)[variable_num].mean().reset_index())
+    
+        tabla = tabla.sort_values(variable_num,ascending=False)
+    
+        fig21 = px.bar(tabla,x=variable_cat,y=variable_num,
+            title=f"{operacion} de {variable_num} por {variable_cat}")
+        tab3.plotly_chart(fig21)
+    
+    else:
+        tab3.info("Se requiere al menos una variable categórica y una numérica.")
+
+
+      
 
     # Tab4 Análisis multivariado
     tab4.subheader("Análisis Multivariado")
