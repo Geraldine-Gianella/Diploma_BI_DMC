@@ -594,11 +594,11 @@ elif modulos == "Análisis visual":
             tab5.plotly_chart(fig17)
     
         # Segmentación categórica 
-        if len(columnas_categoricas) > 0:
+        if len(columnas_categoricas_validas) > 0:
             tab5.subheader("Segmentación por categoría")
         
             # Selección de variable categórica
-            variable_cat = tab5.selectbox("Variable categórica", columnas_categoricas)
+            variable_cat = tab5.selectbox("Variable categórica", columnas_categoricas_validas)
         
             # Copia del dataset ya filtrado por fecha,mes y año
             df_seg = df_temp.copy()
