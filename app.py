@@ -62,6 +62,23 @@ if modulos == "🏠 Home" :
     )
     
   st.markdown("---")
+
+  st.subheader("Contexto del Caso")
+    
+  st.info(
+     """
+     Una consultora de analítica requiere una aplicación flexible que permita
+     explorar y visualizar datasets provenientes de diferentes dominios de negocio,
+     incluyendo mercado laboral, ventas minoristas, comercio electrónico y
+     bienestar digital.
+        
+     La solución debe adaptarse automáticamente a distintas estructuras de datos,
+     identificando variables numéricas, categóricas y temporales para generar
+     análisis exploratorios, visualizaciones e insights que apoyen la toma de
+     decisiones.
+     """
+    )
+  st.markdown("---")
     
   st.subheader("Datasets Disponibles")
   st.write("📌 AI Impact on Jobs 2030")
