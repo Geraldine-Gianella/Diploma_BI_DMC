@@ -487,7 +487,7 @@ elif modulos == "📊 Análisis visual":
     else:
         tab3.info("No hay suficientes variables categóricas.") 
 
-    # Gráfico: Barras agregadas
+    # Gráfico: Barras agregadas por una métrica a elección
     tab3.subheader("Métrica agregada por categoría")
     
     if len(columnas_categoricas_validas) > 0 and len(columnas_numericas) > 0:
@@ -513,6 +513,31 @@ elif modulos == "📊 Análisis visual":
     else:
         tab3.info("Se requiere al menos una variable categórica y una numérica.")
 
+
+    # Gráfico: Ranking Top N
+    tab3.subheader("Ranking Top N")
+    if len(columnas_categoricas_validas) > 0 and len(columnas_numericas) > 0:
+        col1, col2, col3, col4 = tab3.columns(4)
+        variable_cat = col1.selectbox("Variable categórica",columnas_categoricas_validas,
+                                      key="top_cat")
+        variable_num = col2.selectbox("Variable numérica",columnas_numericas,key="top_num")
+        operacion = col3.selectbox("Agregación",["Suma", "Promedio"],key="top_agregacion")
+
+        top_n = col4.selectbox("Top",[5, 10, 15, 20],index=1)
+    
+        if operacion == "Suma": 
+            tabla_top = (data.groupby(variable_cat)[variable_num].sum().reset_index())
+    
+        else:
+            tabla_top = (data.groupby(variable_cat)[variable_num].mean().reset_index())
+    
+        tabla_top = tabla_top.sort_values(variable_num, ascending=False).head(top_n)
+        fig22 = px.bar(tabla_top,x=variable_cat,y=variable_num,
+                         title=f"Top {top_n} de {variable_cat}")    
+        tab3.plotly_chart(fig22)
+    
+    else:
+        tab3.info("Se requiere al menos una variable categórica y una numérica.")
 
       
 
