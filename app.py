@@ -126,19 +126,24 @@ elif modulos == "📂 Carga y perfil del dataset":
     
     # Cambiar el espacio en blanco de las columnas por un subguion 
     st.session_state.data.columns = st.session_state.data.columns.str.lower().str.replace(" ", "_")
+
+    # Información general
+    st.subheader("Información general")  
           
-    # Vista previa del archivo 
-    st.subheader("Vista previa del dataset")
-    st.dataframe(data.head())
+    # Dimensiones 
+    nfilas, ncolumnas = data.shape 
     
-    # Columnas y tipos de datos
-    st.subheader("Columnas y Tipos de Datos")
-    info_columnas = pd.DataFrame({
-          "Columna": data.columns,
-           "Tipo de dato": data.dtypes.astype(str)
-    })
-    info_columnas = info_columnas.reset_index(drop=True)
-    st.dataframe(info_columnas)
+    # Métricas
+    total_nulos = data.isnull().sum().sum()
+    duplicados = data.duplicated().sum()
+    
+    # Mostrar dimensiones, tipos de variables y métricas en una tabla
+    st.write("- Número de registros:", nfilas)
+    st.write("- Número de variables:", ncolumnas)
+    st.write("- Variables numéricas identificadas:", len(columnas_numericas))
+    st.write("- Variables categóricas identificadas:", len(columnas_categoricas))
+    st.write("- Total de valores nulos:", total_nulos)
+    st.write("- Total de filas duplicadas:", duplicados)
 
     # Tipos de variables
     columnas_numericas = data.select_dtypes(
@@ -170,27 +175,24 @@ elif modulos == "📂 Carga y perfil del dataset":
     else:
         st.write("- No se identificaron variables de fecha en el dataset.")
     
-    # Información general
-    st.subheader("Información general")  
-          
-    # Dimensiones 
-    nfilas, ncolumnas = data.shape 
+      
+    # Vista previa del archivo 
+    st.subheader("Vista previa del dataset")
+    st.dataframe(data.head())
     
-    # Métricas
-    total_nulos = data.isnull().sum().sum()
-    duplicados = data.duplicated().sum()
-    
-    # Mostrar dimensiones, tipos de variables y métricas en una tabla
-    st.write("- Número de registros:", nfilas)
-    st.write("- Número de variables:", ncolumnas)
-    st.write("- Variables numéricas identificadas:", len(columnas_numericas))
-    st.write("- Variables categóricas identificadas:", len(columnas_categoricas))
-    st.write("- Total de valores nulos:", total_nulos)
-    st.write("- Total de filas duplicadas:", duplicados)
-    
+    # Columnas y tipos de datos
+    st.subheader("Columnas y Tipos de Datos")
+    info_columnas = pd.DataFrame({
+          "Columna": data.columns,
+           "Tipo de dato": data.dtypes.astype(str)
+    })
+    info_columnas = info_columnas.reset_index(drop=True)
+    st.dataframe(info_columnas)
+
+   
     # Selección de variables 
     st.subheader("Selección de Variables")
-    columnas_seleccionadas = st.multiselect("Seleccione una o más columnas",
+    columnas_seleccionadas = st.multiselect("Seleccione una o más variables para visualizar su resumen estadístico.",
                                             options=data.columns)
     
     # Mostrar estadísticas desccriptivas de las variables seleccionadas
