@@ -594,9 +594,9 @@ elif modulos == "Análisis visual":
             tab5.plotly_chart(fig17)
     
         # Segmentación categórica 
-        if len(columnas_categoricas) > 0: 
+        if len(columnas_categoricas_validas) > 0: 
             tab5.subheader("Segmentación por categoría")
-            variable_cat = tab5.selectbox("Seleccione variable categórica", columnas_categoricas)
+            variable_cat = tab5.selectbox("Seleccione variable categórica", columnas_categoricas_validas)
             df_seg = data
             df_seg["periodo"] = df_seg[variable_fecha].dt.to_period("M").astype(str)
             tabla_seg = df_seg.groupby(["periodo", variable_cat]).size().reset_index(name="cantidad")
