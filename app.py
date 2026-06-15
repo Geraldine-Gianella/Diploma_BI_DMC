@@ -291,10 +291,10 @@ elif modulos == "Procesamiento de datos":
                     fechas = st.date_input("Seleccione rango de fechas",
                         value=(fecha_min, fecha_max))
 
-                    # Mostrar resultado
-                    st.subheader("Dataset Filtrado")
-                    st.write("Número de registros:", len(data_filtrada))     
-                    st.dataframe(data_filtrada)
+        # Mostrar resultado
+        st.subheader("Dataset Filtrado")
+        st.write("Número de registros:", len(data_filtrada))     
+        st.dataframe(data_filtrada)
 
         # Evitar que la app se detenga por errores; usar validaciones y mensajes con st.warning(), st.info() o st.error().
 
