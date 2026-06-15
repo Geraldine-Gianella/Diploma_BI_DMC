@@ -594,15 +594,36 @@ elif modulos == "Análisis visual":
             tab5.plotly_chart(fig17)
     
         # Segmentación categórica 
-        if len(columnas_categoricas_validas) > 0: 
+        if len(columnas_categoricas) > 0:
             tab5.subheader("Segmentación por categoría")
-            variable_cat = tab5.selectbox("Seleccione variable categórica", columnas_categoricas_validas)
-            df_seg = data
+        
+            # Selección de variable categórica
+            variable_cat = tab5.selectbox("Variable categórica", columnas_categoricas)
+        
+            # Copia del dataset ya filtrado por fecha,mes y año
+            df_seg = df_temp.copy()
+        
+            # Crear componentes temporales (igual que arriba)
+            df_seg["anio"] = df_seg[variable_fecha].dt.year
+            df_seg["mes"] = df_seg[variable_fecha].dt.month
+        
+            # Filtros de año y mes 
+            col1, col2 = tab5.columns(2)
+            anios2 = sorted(df_seg["anio"].dropna().unique().tolist())
+            meses2 = list(range(1, 13))
+            anios_sel2 = col1.multiselect("Año(s)", anios2, default=anios2, key="seg_anios")
+            meses_sel2 = col2.multiselect("Mes(es)", meses2, default=meses2, key="seg_meses")
+        
+            df_seg = df_seg[(df_seg["anio"].isin(anios_sel2)) & (df_seg["mes"].isin(meses_sel2))]
+
+            # Agregación
             df_seg["periodo"] = df_seg[variable_fecha].dt.to_period("M").astype(str)
             tabla_seg = df_seg.groupby(["periodo", variable_cat]).size().reset_index(name="cantidad")
-            fig18 = px.line(tabla_seg, x="periodo", y="cantidad", color=variable_cat, markers=True,
+
+            fig20 = px.line(tabla_seg, x="periodo",y="cantidad",color=variable_cat, markers=True,
                             title="Evolución segmentada por " + variable_cat)
-            tab5.plotly_chart(fig18)
+        
+            tab5.plotly_chart(fig20)
           
     # Tab6 Insights
     tab6.subheader("Dashboard General")
