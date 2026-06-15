@@ -486,6 +486,20 @@ elif modulos == "Análisis visual":
     
     else:
         tab4.info("No hay suficientes variables numéricas para correlación.")
+
+    # Scatter multivariado 
+    if len(columnas_numericas) >= 2 and len(columnas_categoricas_validas) >= 1:
+        tab4.subheader("Relación multivariada (3 variables)")
+        col1, col2, col3 = tab4.columns(3)
+        var_x = col1.selectbox("Variable X", columnas_numericas, key="mv_x")
+        var_y = col2.selectbox("Variable Y", columnas_numericas, key="mv_y")
+        var_cat = col3.selectbox("Color (categoría)", columnas_categoricas_validas, key="mv_cat")
+        fig10 = px.scatter(data, x=var_x, y=var_y, color=var_cat, 
+                           title="Relación entre " + var_x + ", " + var_y + " y " + var_cat)
+        tab4.plotly_chart(fig10)
+    
+    else:
+        tab4.info("No hay suficientes variables para scatter multivariado.")
       
 
     # Tab5 Análisis temporal
