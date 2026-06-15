@@ -152,23 +152,24 @@ elif modulos == "📂 Carga y perfil del dataset":
     # Mostrar mensaje si no hay variables de tipo numérica o categórica
     st.subheader("Validación de Variables:")
     if len(columnas_numericas) > 0:
-        st.write("- Se identificaron variables numéricas en el dataset.")
+        st.write("- Se identificaron variables numéricas.")
     else:
-         st.write("- No se identificaron variables numéricas en el dataset.")
+         st.write("- No se identificaron variables numéricas.")
           
     if len(columnas_categoricas) > 0:
-        st.write("- Se identificaron variables categóricas en el dataset.")
+        st.write("- Se identificaron variables categóricas.")
     else:
-        st.write("- No se identificaron variables categóricas en el dataset.")
+        st.write("- No se identificaron variables categóricas.")
           
     if len(columnas_fecha) > 0:
-        st.write("- Se identificaron variables de fecha en el dataset.")
+        st.write("- Se identificaron variables de fecha.")
     else:
-        st.write("- No se identificaron variables de fecha en el dataset.")
+        st.write("- No se identificaron variables de fecha.")
     
       
     # Vista previa del archivo 
     st.subheader("Vista previa del dataset")
+    st.write("Primeros registros del dataset cargado.")
     st.dataframe(data.head())
     
     # Columnas y tipos de datos
