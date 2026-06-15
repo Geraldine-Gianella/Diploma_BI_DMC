@@ -538,59 +538,66 @@ elif modulos == "Análisis visual":
     
 
     # Tab5 Análisis temporal
-
     tab5.subheader("Análisis Temporal")
+    
     columnas_fecha = data.select_dtypes(include=["datetime64[ns]"]).columns.tolist()
     columnas_numericas = data.select_dtypes(include="number").columns.tolist()
-
-    # Gráfico de evolución al escoger una variable numérica 
-    if len(columnas_fecha) == 0 or len(columnas_numericas) == 0:
-        tab5.info("No hay suficientes variables para análisis temporal animado.")
+    columnas_categoricas = data.select_dtypes(include=["object", "category"]).columns.tolist()
+    
+    if len(columnas_fecha) == 0:
+        tab5.info("El dataset no contiene variables de fecha.")
     else:
-        col1, col2 = tab5.columns(2)
-        variable_fecha = col1.selectbox("Variable de fecha", columnas_fecha)
-        variable_num = col2.selectbox("Variable numérica", columnas_numericas)
-        
-        # Preparamos los datos para los filtros por fecha
+        # Selección de variable fecha
+        variable_fecha = tab5.selectbox("Seleccione variable de fecha", columnas_fecha)
         df_temp = data
         df_temp[variable_fecha] = pd.to_datetime(df_temp[variable_fecha], errors="coerce")
         df_temp = df_temp.dropna(subset=[variable_fecha])
+
+        # Crear componentes temporales
+        df_temp["anio"] = df_temp[variable_fecha].dt.year
+        df_temp["mes"] = df_temp[variable_fecha].dt.month
     
-        df_temp["mes"] = df_temp[variable_fecha].dt.to_period("M").astype(str)
-        tabla = df_temp.groupby("mes")[variable_num].mean().reset_index()
-          
-        fig15 = px.bar(tabla, x="mes", y=variable_num, animation_frame="mes",
-                       title="Evolución animada de " + variable_num)
-        tab5.plotly_chart(fig15)
+        # Filtros de año y mes
+        col1, col2 = tab5.columns(2)  
+        anios = sorted(df_temp["anio"].dropna().unique().tolist())
+        meses = list(range(1, 13))
+        anios_sel = col1.multiselect("Año(s)", anios, default=anios)
+        meses_sel = col2.multiselect("Mes(es)", meses, default=meses)
     
+        df_temp = df_temp[
+            (df_temp["anio"].isin(anios_sel)) &
+            (df_temp["mes"].isin(meses_sel))
+        ]
 
-    # Gráfico 
-    if len(columnas_fecha) == 0:
-        tab5.info("El dataset no contiene variables de tipo fecha para análisis temporal.")
+        # Selección de métrica
+        if len(columnas_numericas) > 0:
+            variable_num = tab5.selectbox("Variable numérica (métrica)",columnas_numericas)
     
-    else:
-        variable_fecha = tab5.selectbox("Seleccione variable de fecha", columnas_fecha)
-
-
-    # Preparamos los datos para los filtros por fecha
-    df_temp = data
-    df_temp[variable_fecha] = pd.to_datetime(df_temp[variable_fecha], errors="coerce")
-    df_temp = df_temp.dropna(subset=[variable_fecha])
-
-    df_temp["mes"] = df_temp[variable_fecha].dt.to_period("M").astype(str)
-
-    # Seleccionamos la métrica numérica
-    if len(columnas_numericas) > 0:
-        variable_num = tab5.selectbox("Seleccione métrica numérica", columnas_numericas)
-        tabla = df_temp.groupby("mes")[variable_num].mean().reset_index()
-        # Gráfico de linea 
-        fig13 = px.line(tabla, x="mes", y=variable_num, 
-                      title="Evolución de " + variable_num + " en el tiempo")
-        tab5.plotly_chart(fig13)
-    else:
-        tabla = df_temp.groupby("mes").size().reset_index(name="cantidad")
-        fig14 = px.line(tabla, x="mes", y="cantidad", title="Evolución de registros en el tiempo")
-        tab5.plotly_chart(fig14)
+            #  Agregación temporal
+            df_temp["periodo"] = df_temp[variable_fecha].dt.to_period("M").astype(str)
+            tabla = df_temp.groupby("periodo")[variable_num].mean().reset_index()
+    
+            # Gráfico de tendencia
+            fig16 = px.line(tabla, x="periodo", y=variable_num, markers=True,
+                          title="Evolución de " + variable_num + " en el tiempo")
+            tab5.plotly_chart(fig16)
+    
+        else:
+            # Si no hay numéricas 
+            df_temp["periodo"] = df_temp[variable_fecha].dt.to_period("M").astype(str)
+            tabla = df_temp.groupby("periodo").size().reset_index(name="cantidad")
+            fig17 = px.line(tabla, x="periodo", y="cantidad", markers=True,
+                            title="Evolución de registros en el tiempo")
+            tab5.plotly_chart(fig17)
+    
+        # Segmentación categórica 
+        if len(columnas_categoricas) > 0:
+            tab5.subheader("Segmentación por categoría")
+            variable_cat = tab5.selectbox("Variable categórica", columnas_categoricas)
+            df_seg = df_temp.groupby(["periodo", variable_cat]).size().reset_index(name="cantidad")
+            fig18 = px.line(df_seg, x="periodo", y="cantidad", color=variable_cat,  markers=True,
+                             title="Evolución segmentada por " + variable_cat)
+            tab5.plotly_chart(fig18)
           
     # Tab6 Insights
     tab6.subheader("Dashboard General")
