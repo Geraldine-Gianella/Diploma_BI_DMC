@@ -443,21 +443,14 @@ elif modulos == "Análisis visual":
         tab3.subheader("Comparación entre variables categóricas")
         col1, col2 = tab3.columns(2)
         cat1 = col1.selectbox("Variable categórica 1", columnas_categoricas_validas, key="cat1_bar")
-        
-        # Evitar seleccionar la misma variable dos veces
         opciones_cat2 = [c for c in columnas_categoricas_validas if c != cat1]
         cat2 = col2.selectbox("Variable categórica 2", opciones_cat2, key="cat2_bar")
+        df_temp = data[[cat1, cat2]].dropna()
     
-        # Crear tabla de frecuencias
-        tabla = (data[[cat1, cat2]].dropna().groupby([cat1, cat2]).size().reset_index(name="cantidad"))
+        tabla = (df_temp.groupby([cat1, cat2]).size().reset_index(name="cantidad"))
     
-        # Ordenar para mejor visualización
-        tabla = tabla.sort_values("cantidad", ascending=False)
-    
-        # Gráfico
-        fig6 = px.bar(tabla, x=cat1, y=cat2, color=cat2, barmode="group", 
+        fig6 = px.bar(tabla, x=cat1, y="cantidad", color=cat2, barmode="group", 
                       title="Relación entre " + cat1 + " y " + cat2)
-    
         tab3.plotly_chart(fig6)
     
     else:
