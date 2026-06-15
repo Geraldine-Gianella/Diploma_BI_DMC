@@ -31,8 +31,7 @@ else:
     st.sidebar.info("No hay dataset cargado")
 st.sidebar.markdown("---")
 
-st.sidebar.subheader("Diploma")
-st.sidebar.write("Business Analyst")
+st.sidebar.subheader("Diploma Business Analyst")
 
 st.sidebar.write("Exploración y Visualización de Datos con Python")
 # Añadir imagenes
