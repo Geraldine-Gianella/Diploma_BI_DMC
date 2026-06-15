@@ -433,21 +433,30 @@ elif modulos == "Análisis visual":
     else:
         tab3.info("No hay variables suficientes para boxplot por categoría.")
 
-    # Comparación categorica con barras agrupadas
+    # Comparación categórica con barras agrupadas
     if len(columnas_categoricas) >= 2:
         tab3.subheader("Comparación entre variables categóricas")
         col1, col2 = tab3.columns(2)
-
-        cat1 = col1.selectbox("Categoría 1", columnas_categoricas, key="cat1_bar")
-        cat2 = col2.selectbox("Categoría 2", columnas_categoricas, key="cat2_bar")  
-        tabla = (data.groupby([cat1, cat2]).size().reset_index().rename(columns={0: "cantidad"}))
+        cat1 = col1.selectbox("Variable categórica 1", columnas_categoricas, key="cat1_bar")
+        
+        # Evitar seleccionar la misma variable dos veces
+        opciones_cat2 = [c for c in columnas_categoricas if c != cat1]
+        cat2 = col2.selectbox("Variable categórica 2", opciones_cat2, key="cat2_bar")
     
+        # Crear tabla de frecuencias
+        tabla = (data[[cat1, cat2]].dropna().groupby([cat1, cat2]).size().reset_index(name="cantidad"))
+    
+        # Ordenar para mejor visualización
+        tabla = tabla.sort_values("cantidad", ascending=False)
+    
+        # Gráfico
         fig6 = px.bar(tabla, x=cat1, y="cantidad", color=cat2, barmode="group", 
                       title="Relación entre " + cat1 + " y " + cat2)
+    
         tab3.plotly_chart(fig6)
     
     else:
-        tab3.info("No hay suficientes variables categóricas para comparación.")    
+        tab3.info("No hay suficientes variables categóricas para comparación.")
 
     # Tab4 Análisis multivariado
     tab4.subheader("Variables Categóricas")
