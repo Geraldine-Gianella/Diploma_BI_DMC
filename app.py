@@ -440,7 +440,7 @@ elif modulos == "Análisis visual":
 
         cat1 = col1.selectbox("Categoría 1", columnas_categoricas, key="cat1_bar")
         cat2 = col2.selectbox("Categoría 2", columnas_categoricas, key="cat2_bar")  
-        tabla = data.groupby([cat1, cat2]).size().reset_index(name="cantidad")
+        tabla = (data.groupby([cat1, cat2]).size().reset_index().rename(columns={0: "cantidad"}))
     
         fig6 = px.bar(tabla, x=cat1, y="cantidad", color=cat2, barmode="group", 
                       title="Relación entre " + cat1 + " y " + cat2)
