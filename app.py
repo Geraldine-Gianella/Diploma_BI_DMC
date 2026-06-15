@@ -544,7 +544,7 @@ elif modulos == "📊 Análisis visual":
     # Tab4 Análisis multivariado
     tab4.subheader("Análisis Multivariado")
 
-    # Correlacion con heatmap 
+    # Gráfico : Correlacion con heatmap 
     if len(columnas_numericas) >= 2:
         tab4.subheader("Correlación entre variables numéricas")
         corr = data[columnas_numericas].corr()
@@ -555,7 +555,7 @@ elif modulos == "📊 Análisis visual":
     else:
         tab4.info("No hay suficientes variables numéricas para correlación.")
 
-    # Scatter multivariado (2 numéricas y 1 categorica)
+    # Gráfico : Scatter multivariado (2 numéricas y 1 categorica)
     if len(columnas_numericas) >= 2 and len(columnas_categoricas_validas) >= 1:
         tab4.subheader("Relación multivariada")
         col1, col2, col3 = tab4.columns(3)
@@ -569,7 +569,7 @@ elif modulos == "📊 Análisis visual":
     else:
         tab4.info("No hay suficientes variables para scatter multivariado.")
 
-    # Segmentación múltiple (1 numerica y 2 categoricas)
+    # Gráfico : Segmentación múltiple (1 numerica y 2 categoricas)
     if len(columnas_numericas) >= 1 and len(columnas_categoricas_validas) >= 2:
     
         tab4.subheader("Segmentación multivariada")
@@ -594,7 +594,7 @@ elif modulos == "📊 Análisis visual":
     else:
         tab4.info("No hay suficientes variables para segmentación.")
 
-    # Heatmap de interacción categórica 
+    # Gráfico :  Heatmap de interacción categórica 
     if len(columnas_categoricas_validas) >= 2:
         tab4.subheader("Mapa de interacción categórica")
         cat1 = columnas_categoricas_validas[0]
@@ -603,6 +603,25 @@ elif modulos == "📊 Análisis visual":
         fig12, ax = plt.subplots()
         sns.heatmap(tabla, cmap="Blues", ax=ax)
         tab4.pyplot(fig12)
+
+    # Scatter multivariado avanzado (3 numéricas y 1 categórica)
+    if len(columnas_numericas) >= 3 and len(columnas_categoricas_validas) >= 1:
+        tab4.subheader("Relación multivariada avanzada")  
+        col1, col2, col3, col4 = tab4.columns(4)
+        
+        var_x = col1.selectbox("Variable X", columnas_numericas, key="mv4_x")
+        opciones_y = [c for c in columnas_numericas if c != var_x]
+        var_y = col2.selectbox("Variable Y", opciones_y, key="mv4_y")
+        opciones_size = [c for c in columnas_numericas if c not in [var_x, var_y]]
+        var_size = col3.selectbox("Tamaño", opciones_size, key="mv4_size")
+        var_cat = col4.selectbox("Color", columnas_categoricas_validas, key="mv4_cat")
+        
+        fig23 = px.scatter(data,x=var_x,y=var_y,size=var_size,color=var_cat,
+                           title=f"{var_x} vs {var_y} | Tamaño: {var_size} | Color: {var_cat}")
+        tab4.plotly_chart(fig23)
+    
+    else:
+        tab4.info("Se requieren al menos tres variables numéricas y una categórica.")
     
 
     # Tab5 Análisis temporal
