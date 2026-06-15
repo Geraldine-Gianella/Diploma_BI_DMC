@@ -601,9 +601,9 @@ elif modulos == "Análisis visual":
             variable_cat = tab5.selectbox("Variable categórica", columnas_categoricas_validas)
         
             # Copia del dataset ya filtrado por fecha,mes y año
-            df_seg = df_temp.copy()
+            df_seg = data
         
-            # Crear componentes temporales (igual que arriba)
+            # Crear componentes temporales 
             df_seg["anio"] = df_seg[variable_fecha].dt.year
             df_seg["mes"] = df_seg[variable_fecha].dt.month
         
