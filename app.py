@@ -538,10 +538,41 @@ elif modulos == "Análisis visual":
     
 
     # Tab5 Análisis temporal
+
     tab5.subheader("Análisis Temporal")
     columnas_fecha = data.select_dtypes(include=["datetime64[ns]"]).columns.tolist()
     columnas_numericas = data.select_dtypes(include="number").columns.tolist()
-      
+
+    # Gráfico de evolución al escoger una variable numérica 
+    if len(columnas_fecha) == 0 or len(columnas_numericas) == 0:
+        tab5.info("No hay suficientes variables para análisis temporal animado.")
+    else:
+        col1, col2 = tab5.columns(2)
+        variable_fecha = col1.selectbox("Variable de fecha", columnas_fecha)
+        variable_num = col2.selectbox("Variable numérica", columnas_numericas)
+        
+        # Preparamos los datos para los filtros por fecha
+        df_temp = data
+        df_temp[variable_fecha] = pd.to_datetime(df_temp[variable_fecha], errors="coerce")
+        df_temp = df_temp.dropna(subset=[variable_fecha])
+    
+        df_temp["mes"] = df_temp[variable_fecha].dt.to_period("M").astype(str)
+        tabla = df_temp.groupby("mes")[variable_num].mean().reset_index()
+          
+        fig15 = px.line(
+            tabla,
+            x="mes",
+            y=variable_num,
+            markers=True,
+            title="Evolución animada de " + variable_num,
+            animation_frame="mes",
+            range_y=[tabla[variable_num].min(), tabla[variable_num].max()]
+        )
+    
+        tab5.plotly_chart(fig15)
+    
+
+    # Gráfico 
     if len(columnas_fecha) == 0:
         tab5.info("El dataset no contiene variables de tipo fecha para análisis temporal.")
     
