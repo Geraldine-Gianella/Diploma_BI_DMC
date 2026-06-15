@@ -730,8 +730,8 @@ elif modulos == "📊 Análisis visual":
         cantidad_nulos = data.isnull().sum().max()
         tab6.write(f"• La variable '{variable_nulos}' presenta la mayor cantidad de valores faltantes ({cantidad_nulos}).")
 
-    if len(columnas_categoricas) > 0:
-        variable_cat = columnas_categoricas[0]
+    if len(columnas_categoricas_validas) > 0:
+        variable_cat = columnas_categoricas_validas[0]
         categoria_top = data[variable_cat].value_counts().idxmax()
         frecuencia = data[variable_cat].value_counts().max()
         tab6.write(f"• En la variable '{variable_cat}', la categoría predominante es '{categoria_top}' con {frecuencia} registros.")
@@ -769,7 +769,7 @@ elif modulos == "📊 Análisis visual":
     if duplicados > 0:
         tab6.write("• Validar los registros duplicados para evitar sesgos en los resultados.")
     
-    if len(columnas_categoricas) > 0:
+    if len(columnas_categoricas_validas) > 0:
         tab6.write("• Analizar con mayor detalle las categorías con mayor participación para identificar oportunidades o riesgos.")
     
     if len(columnas_numericas) >= 2:
