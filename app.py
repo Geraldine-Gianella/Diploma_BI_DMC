@@ -474,20 +474,22 @@ elif modulos == "Análisis visual":
     else:
         tab4.info("No hay suficientes variables numéricas para correlación.")   
 
-    # Segmentación por categorías
-    if len(columnas_categoricas) > 0 and len(columnas_numericas) > 0:
-        tab4.subheader("Segmentación por categorías")
+    # Barras apiladas para combinación de variables categóricas
+    if len(columnas_categoricas) >= 2:
+        tab4.subheader("Barras apiladas")
         col1, col2 = tab4.columns(2)
     
-        var_cat = col1.selectbox("Variable categórica", columnas_categoricas, key="seg_cat")
-        var_num = col2.selectbox("Variable numérica", columnas_numericas, key="seg_num")
+        cat1 = col1.selectbox("Categoría base", columnas_categoricas, key="stack_cat1")
+        opciones_cat2 = [c for c in columnas_categoricas if c != cat1]
+        cat2 = col2.selectbox("Segmentación", opciones_cat2, key="stack_cat2")
+        tabla = (data[[cat1, cat2]].dropna().groupby([cat1, cat2]).size().reset_index(name="cantidad"))
     
-        fig8 = px.box(data, x=var_cat, y=var_num, 
-                      title="Distribución de " + var_num + " por " + var_cat)
+        fig8 = px.bar(tabla, x=cat1, y="cantidad", color=cat2, barmode="stack",
+                      title="Barras apiladas: " + cat1 + " vs " + cat2)
         tab4.plotly_chart(fig8)
     
     else:
-        tab4.info("No hay variables suficientes para segmentación.")
+        tab4.info("No hay suficientes variables categóricas.")   
 
     # Tab5 Análisis temporal
     tab5.subheader("Análisis Temporal")
