@@ -18,7 +18,6 @@ if "nombre_archivo" not in st.session_state:
 st.title("APLICACIÓN ANALIZADORA DE DATASETS CON STREAMLIT")
 
 # Crear módulos de vista
-#st.sidebar.image("logo.png")
 st.sidebar.title("Navegación")
 modulos = st.sidebar.selectbox("Seleccione un módulo",["🏠 Home","📂 Carga y perfil del dataset",
                                                        "⚙️ Procesamiento de datos","📊 Análisis visual"])
@@ -31,6 +30,7 @@ else:
     st.sidebar.info("No hay dataset cargado")
 st.sidebar.markdown("---")
 
+st.sidebar.image("DMC.png", width=100)
 st.sidebar.subheader("Diploma Business Analyst")
 st.sidebar.write("Exploración y Visualización de Datos con Python")
 
