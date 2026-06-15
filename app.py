@@ -195,9 +195,9 @@ elif modulos == "Procesamiento de datos":
           ).columns.tolist()
 
         # Mencionar si hay variables tipo fecha y mostrarlas
-        st.subheader("Variables de tipo Fecha")
+        # st.subheader("Variables de tipo Fecha")
         if len(columnas_fecha) > 0:
-            st.write("Se identificaron las siguientes variables de tipo fecha:")
+            st.write("**Se identificaron las siguientes variables de tipo fecha:**")
             for columna in columnas_fecha:
                 st.write("-", columna)
         else:
@@ -219,11 +219,11 @@ elif modulos == "Procesamiento de datos":
         columnas_numericas = obtener_variables_numericas(data)
         columnas_categoricas = obtener_variables_categoricas(data)
 
-        st.subheader("Variables Numéricas")
+        st.write("**Variables Numéricas:**")
         for columna in columnas_numericas:
             st.write("- ", columna)
-        st.subheader("Variables Categóricas")
-        
+            
+        st.write("**Variables Categóricas:**")  
         for columna in columnas_categoricas:
             st.write("- ", columna)
 
@@ -240,12 +240,14 @@ elif modulos == "Procesamiento de datos":
             "Porcentaje (%)": porcentaje_nulos.values.round(2)
         })
 
-        st.subheader("Valores Faltantes por Columna")
+        #st.subheader("Valores Faltantes por Columna")
+        st.write("**Valores Faltantes por Columna:**")
         st.dataframe(resumen_nulos)
 
         # Detectar duplicados y reportar su cantidad.
         duplicados = data.duplicated().sum()
-        st.subheader("Detección de Duplicados")
+        #st.subheader("Detección de Duplicados")
+        st.write("**Detección de Duplicados**")
         
         if duplicados > 0:
             st.write("Se identificaron", duplicados, "filas duplicadas en el dataset.")
@@ -254,7 +256,8 @@ elif modulos == "Procesamiento de datos":
 
         # Outliers en variables numéricas usando IQR o boxplots.
       
-        st.subheader("Detección de Outliers en Variables Numéricas")
+        #st.subheader("Detección de Outliers en Variables Numéricas")
+        st.write("**Detección de Outliers en Variables Numéricas**")
         if len(columnas_numericas) > 0:
             fig1 = px.box( data[columnas_numericas], title="Boxplots de Variables Numéricas")
             st.plotly_chart(fig1)     
@@ -262,7 +265,8 @@ elif modulos == "Procesamiento de datos":
             st.write( "No se identificaron variables numéricas en el dataset.")
 
         # Permitir filtros dinámicos por categorías, rangos numéricos o fechas cuando apliquen
-        st.subheader("Filtros Dinámicos")
+        #st.subheader("Filtros Dinámicos")
+        st.write("**Filtros Dinámicos**")
         data_filtrada = data
         # Filtro categórico
         if len(columnas_categoricas) > 0:
@@ -292,7 +296,8 @@ elif modulos == "Procesamiento de datos":
                         value=(fecha_min, fecha_max))
 
                     # Mostrar resultado
-                    st.subheader("Dataset Filtrado")
+                    #st.subheader("Dataset Filtrado")
+                    st.write("Dataset Filtrado")
                     st.write("Número de registros:", len(data_filtrada))     
                     st.dataframe(data_filtrada)
 
