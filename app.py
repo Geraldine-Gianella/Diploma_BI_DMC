@@ -455,7 +455,7 @@ elif modulos == "Análisis visual":
         tabla = tabla.sort_values("cantidad", ascending=False)
     
         # Gráfico
-        fig6 = px.bar(tabla, x=cat1, y="cantidad", color=cat2, barmode="group", 
+        fig6 = px.bar(tabla, x=cat1, y=cat2, color=cat2, barmode="group", 
                       title="Relación entre " + cat1 + " y " + cat2)
     
         tab3.plotly_chart(fig6)
