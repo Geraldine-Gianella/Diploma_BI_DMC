@@ -641,12 +641,12 @@ elif modulos == "Análisis visual":
     
         # Hallazgos automáticos simples
         tab6.write("**Resumen general del dataset:**")
-        tab6.write("- Número de registros:", nfilas)
-        tab6.write("- Número de variables:", ncolumnas)
-        tab6.write("- Variables numéricas:", len(columnas_numericas))
-        tab6.write("- Variables categóricas:", len(columnas_categoricas))
-        tab6.write("- Valores nulos totales:", total_nulos)
-        tab6.write("- Filas duplicadas:", duplicados)
+        tab6.write("- Número de registros:"+ str(nfilas))
+        tab6.write("- Número de variables:"+ str(ncolumnas))
+        tab6.write("- Variables numéricas:"+ str(columnas_numericas))
+        tab6.write("- Variables categóricas:"+ str(columnas_categoricas))
+        tab6.write("- Valores nulos totales:"+ str(total_nulos))
+        tab6.write("- Filas duplicadas:"+ str(duplicados))
         tab6.markdown("---")
     
         # Calidad de datos
