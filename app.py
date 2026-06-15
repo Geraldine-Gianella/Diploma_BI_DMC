@@ -539,7 +539,12 @@ elif modulos == "Análisis visual":
 
     # Tab5 Análisis temporal
     tab5.subheader("Análisis Temporal")
-    
+
+    # Convertir las columnas a fecha si lo son 
+    for columna in data.columns:
+        if "date" in columna:
+        data[columna] = pd.to_datetime(data[columna])
+
     columnas_fecha = data.select_dtypes(include=["datetime64[ns]"]).columns.tolist()
     columnas_numericas = data.select_dtypes(include="number").columns.tolist()
     columnas_categoricas = data.select_dtypes(include=["object", "category"]).columns.tolist()
