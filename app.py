@@ -64,16 +64,16 @@ if modulos == "🏠 Home" :
     
   st.subheader("Datasets Disponibles")
   st.write("📌 AI Impact on Jobs 2030")
-  st.write("Impacto de la inteligencia artificial en empleos y salarios.")
+  st.write("Evaluación del impacto de la IA en el mercado laboral, riesgos de reemplazo y salarios.")
     
   st.write("📌 Sample Superstore")
-  st.write("Información de ventas, pedidos y ganancias.")
+  st.write("Datos de ventas, pedidos y ganancias de una tienda minorista para análisis comercial.")
     
   st.write("📌 Synthetic E-commerce Order Risk")
-  st.write("Detección de fraude y riesgo en pedidos.")
+  st.write("Datos enfocados en la detección de fraudes y riesgos en transacciones electrónicas.")
     
   st.write("📌 Teen Mental Health Dataset")
-  st.write("Relación entre redes sociales y bienestar emocional.")
+  st.write("Análisis del impacto de redes sociales y tiempo de pantalla en el bienestar emocional de adolescentes.")
     
   st.markdown("---")
     
