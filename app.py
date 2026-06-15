@@ -150,7 +150,7 @@ elif modulos == "📂 Carga y perfil del dataset":
     st.write("- Total de filas duplicadas:", duplicados)
           
     # Mostrar mensaje si no hay variables de tipo numérica o categórica
-    st.write("**Validación de Variables:**")
+    st.subheader("Validación de Variables:")
     if len(columnas_numericas) > 0:
         st.write("- Se identificaron variables numéricas en el dataset.")
     else:
