@@ -539,7 +539,34 @@ elif modulos == "Análisis visual":
 
     # Tab5 Análisis temporal
     tab5.subheader("Análisis Temporal")
+    
+    if len(columnas_fecha) == 0:
+        tab5.info("El dataset no contiene variables de tipo fecha para análisis temporal.")
+    
+    else:
+        variable_fecha = tab5.selectbox("Seleccione variable de fecha", columnas_fecha)
 
+
+    # Preparamos los datos para los filtros por fecha
+    df_temp = data
+    df_temp[variable_fecha] = pd.to_datetime(df_temp[variable_fecha], errors="coerce")
+    df_temp = df_temp.dropna(subset=[variable_fecha])
+
+    df_temp["mes"] = df_temp[variable_fecha].dt.to_period("M").astype(str)
+
+    # Seleccionamos la métrica numérica
+    if len(columnas_numericas) > 0:
+        variable_num = tab5.selectbox("Seleccione métrica numérica", columnas_numericas)
+        tabla = df_temp.groupby("mes")[variable_num].mean().reset_index()
+        # Gráfico de linea 
+        fig13 = px.line(tabla, x="mes", y=variable_num, 
+                      title="Evolución de " + variable_num + " en el tiempo")
+        tab5.plotly_chart(fig13)
+     else:
+        tabla = df_temp.groupby("mes").size().reset_index(name="cantidad")
+        fig14 = px.line(tabla, x="mes", y="cantidad", title="Evolución de registros en el tiempo")
+        tab5.plotly_chart(fig14)
+          
     # Tab6 Insights
     tab6.subheader("Dashboard General")
 
