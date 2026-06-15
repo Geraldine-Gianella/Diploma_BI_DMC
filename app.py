@@ -192,9 +192,7 @@ elif modulos == "Procesamiento de datos":
           if "date" in columna:
               data[columna] = pd.to_datetime(data[columna])
     
-        columnas_fecha = data.select_dtypes(
-              include=["datetime64[ns]"]
-          ).columns.tolist()
+        columnas_fecha = data.select_dtypes(include=["datetime64[ns]"]).columns.tolist()
 
         # Mencionar si hay variables tipo fecha y mostrarlas
         st.subheader("Variables de tipo Fecha")
@@ -543,7 +541,7 @@ elif modulos == "Análisis visual":
     # Convertir las columnas a fecha si lo son 
     for columna in data.columns:
         if "date" in columna:
-        data[columna] = pd.to_datetime(data[columna])
+            data[columna] = pd.to_datetime(data[columna])
 
     columnas_fecha = data.select_dtypes(include=["datetime64[ns]"]).columns.tolist()
     columnas_numericas = data.select_dtypes(include="number").columns.tolist()
