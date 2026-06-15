@@ -328,7 +328,7 @@ elif modulos == "Procesamiento de datos":
                         len(data_filtrada)
                     )
                     
-                    st.dataframe(data_filtrada.head())
+                    st.dataframe(data_filtrada)
 
         # Evitar que la app se detenga por errores; usar validaciones y mensajes con st.warning(), st.info() o st.error().
 
