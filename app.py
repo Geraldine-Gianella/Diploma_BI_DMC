@@ -262,7 +262,7 @@ elif modulos == "Procesamiento de datos":
 
         # Permitir filtros dinámicos por categorías, rangos numéricos o fechas cuando apliquen
         st.subheader("Filtros Dinámicos")
-
+        data_filtrada = data
         # Filtro categórico
         if len(columnas_categoricas) > 0:
         
@@ -277,9 +277,8 @@ elif modulos == "Procesamiento de datos":
             )
         
             if categorias:
-                data = data[
-                    data[variable_cat].isin(categorias)
-                ]
+                data_filtrada = data_filtrada[data_filtrada[variable_cat].isin(categorias)]
+
 
             # Filtro numérico 
             if len(columnas_numericas) > 0:
@@ -299,10 +298,11 @@ elif modulos == "Procesamiento de datos":
                     (minimo, maximo)
                 )
             
-                data = data[
-                    (data[variable_num] >= rango[0]) &
-                    (data[variable_num] <= rango[1])
+                data_filtrada = data_filtrada[
+                    (data_filtrada[variable_num] >= rango[0]) &
+                    (data_filtrada[variable_num] <= rango[1])
                 ]
+
 
                 # Filtros por fechas 
                 if len(columnas_fecha) > 0:
@@ -319,6 +319,16 @@ elif modulos == "Procesamiento de datos":
                         "Seleccione rango de fechas",
                         value=(fecha_min, fecha_max)
                     )
+
+                    # Mostrar resultado
+                    st.subheader("Dataset Filtrado")
+                    
+                    st.write(
+                        "Número de registros:",
+                        len(data_filtrada)
+                    )
+                    
+                    st.dataframe(data_filtrada.head())
 
         # Evitar que la app se detenga por errores; usar validaciones y mensajes con st.warning(), st.info() o st.error().
 
