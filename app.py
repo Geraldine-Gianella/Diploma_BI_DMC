@@ -298,23 +298,49 @@ elif modulos == "Procesamiento de datos":
 
 elif modulos == "Análisis visual":
     
-    if st.session_state.data is not None:
-      data = st.session_state.data
-      tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
-            "Distribuciones",
-            "Comparaciones",
-            "Correlaciones",
-            "Categorías",
-            "Fechas",
-            "Dashboard"])
+  if st.session_state.data is not None:
+    data = st.session_state.data
+    # Establecemos los tab
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+        "Resumen",
+         "Análisis univariado",
+         "Análisis bivariado",
+         "Análisis multivariado",
+         "Análisis temporal",
+         "Insights"])
+      
+    # Tab1 Resumen 
+    tab1.subheader("Resumen del Dataset")
+    nfilas, ncolumnas = data.shape
+    columnas_numericas = data.select_dtypes(include="number").columns.tolist()
+    columnas_categoricas = data.select_dtypes(include=["object", "category"]).columns.tolist()
+    nulos = data.isnull().sum().sum()
+    duplicados = data.duplicated().sum()
 
-      tab1.subheader("Distribución de Variables Numéricas")
-      tab2.subheader("Comparación entre Variables")
-      tab3.subheader("Correlaciones")
-      tab4.subheader("Variables Categóricas")
-      tab5.subheader("Análisis Temporal")
-      tab6.subheader("Dashboard General")
+    tab1.write("Número de filas:", nfilas)
+    tab1.write("Número de columnas:", ncolumnas)
+    tab1.write("Variables numéricas:", len(columnas_numericas))
+    tab1.write("Variables categóricas:", len(columnas_categoricas))
+    tab1.write("Valores nulos:", nulos)
+    tab1.write("Filas duplicadas:", duplicados)
 
-    else:
-        st.warning("Primero debe cargar un dataset.")
+    tab1.dataframe(data.describe(include="all"))
+
+    # Tab2 Análisis univariado
+    tab2.subheader("Comparación entre Variables")
+
+    # Tab3 Análisis bivariado
+    tab3.subheader("Correlaciones")
+
+    # Tab4 Análisis multivariado
+    tab4.subheader("Variables Categóricas")
+
+    # Tab5 Análisis temporal
+    tab5.subheader("Análisis Temporal")
+
+    # Tab6 Insights
+    tab6.subheader("Dashboard General")
+
+  else:
+    st.warning("Primero debe cargar un dataset.")
           
