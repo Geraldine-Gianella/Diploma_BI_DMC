@@ -539,7 +539,9 @@ elif modulos == "Análisis visual":
 
     # Tab5 Análisis temporal
     tab5.subheader("Análisis Temporal")
-    
+    columnas_fecha = data.select_dtypes(include=["datetime64[ns]"]).columns.tolist()
+    columnas_numericas = data.select_dtypes(include="number").columns.tolist()
+      
     if len(columnas_fecha) == 0:
         tab5.info("El dataset no contiene variables de tipo fecha para análisis temporal.")
     
