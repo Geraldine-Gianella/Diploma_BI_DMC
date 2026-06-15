@@ -317,12 +317,12 @@ elif modulos == "Análisis visual":
     nulos = data.isnull().sum().sum()
     duplicados = data.duplicated().sum()
 
-    tab1.write("Número de filas:", nfilas)
-    tab1.write("Número de columnas:", ncolumnas)
-    tab1.write("Variables numéricas:", len(columnas_numericas))
-    tab1.write("Variables categóricas:", len(columnas_categoricas))
-    tab1.write("Valores nulos:", nulos)
-    tab1.write("Filas duplicadas:", duplicados)
+    tab1.write(f"Número de filas: {nfilas}")
+    tab1.write(f"Número de columnas: {ncolumnas}")
+    tab1.write(f"Variables numéricas: {len(columnas_numericas)}")
+    tab1.write(f"Variables categóricas: {len(columnas_categoricas)}")
+    tab1.write(f"Valores nulos: {nulos}")
+    tab1.write(f"Filas duplicadas: {duplicados}")
 
     tab1.dataframe(data.describe(include="all"))
 
