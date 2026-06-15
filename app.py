@@ -103,7 +103,6 @@ elif modulos == "📂 Carga y perfil del dataset":
   archivo = st.file_uploader("Cargue el archivo Excel o CSV", type=["csv", "xlsx"])
   
   if archivo is not None :
-
     # Guardamos el nombre del archivo en session_state
     st.session_state.nombre_archivo = archivo.name
     
@@ -136,14 +135,6 @@ elif modulos == "📂 Carga y perfil del dataset":
     # Métricas
     total_nulos = data.isnull().sum().sum()
     duplicados = data.duplicated().sum()
-    
-    # Mostrar dimensiones, tipos de variables y métricas en una tabla
-    st.write("- Número de registros:", nfilas)
-    st.write("- Número de variables:", ncolumnas)
-    st.write("- Variables numéricas identificadas:", len(columnas_numericas))
-    st.write("- Variables categóricas identificadas:", len(columnas_categoricas))
-    st.write("- Total de valores nulos:", total_nulos)
-    st.write("- Total de filas duplicadas:", duplicados)
 
     # Tipos de variables
     columnas_numericas = data.select_dtypes(
@@ -157,6 +148,14 @@ elif modulos == "📂 Carga y perfil del dataset":
     columnas_fecha = data.select_dtypes(
           include=["datetime64[ns]"]
     ).columns.tolist()
+    
+    # Mostrar dimensiones, tipos de variables y métricas en una tabla
+    st.write("- Número de registros:", nfilas)
+    st.write("- Número de variables:", ncolumnas)
+    st.write("- Variables numéricas identificadas:", len(columnas_numericas))
+    st.write("- Variables categóricas identificadas:", len(columnas_categoricas))
+    st.write("- Total de valores nulos:", total_nulos)
+    st.write("- Total de filas duplicadas:", duplicados)
           
     # Mostrar mensaje si no hay variables de tipo numérica o categórica
     st.write("**Validación de Variables:**")
